@@ -1,4 +1,3 @@
-import React from 'react'
 import {LockIcon} from "lucide-react"
 
 const Header = () => {
