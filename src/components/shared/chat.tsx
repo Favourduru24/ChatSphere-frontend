@@ -18,15 +18,15 @@ const Chat = () => {
           {name: 'Kelvin Kart', text: 'I have been working', time: '9:53', color: 'bg-green-500'},
           {name: 'Kelvin Port', text: 'How did you start', time: '10:53', color: 'bg-pink-500'},
           {name: 'Favour Duru', text: 'I have sent you the link', time: '1:53', color: 'bg-black'},
-          // {name: 'Duru Pristine', text: 'How should i start', time: '12:53', color: 'bg-orange-500'},
-          // {name: 'Kelvin Kart', text: 'I have been working', time: '12:53', color: 'bg-yellow-500'},
-          // {name: 'Kelvin Port', text: 'How did you start', time: '12:53', color: 'bg-red-500'},
-          // {name: 'Duru Pristine', text: 'How should i start', time: '12:53', color: 'bg-orange-500'},
+          {name: 'Duru Pristine', text: 'How should i start', time: '12:53', color: 'bg-orange-500'},
+          {name: 'Kelvin Kart', text: 'I have been working', time: '12:53', color: 'bg-yellow-500'},
+          {name: 'Kelvin Port', text: 'How did you start', time: '12:53', color: 'bg-red-500'},
+          {name: 'Duru Pristine', text: 'How should i start', time: '12:53', color: 'bg-orange-500'},
    ]
 
    const chatMessage = [
     // {name: 'Favour Duru', text: 'Lorem ipsum dolor, sit amet consectetur.', time: '9:53', color: 'bg-red-500'},
-          // {name: 'Kelvin Kart', text: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis tempore eius, ab nulla officia minima!', time: '9:53', color: 'bg-green-500'},
+          {name: 'Kelvin Kart', text: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis tempore eius, ab nulla officia minima!', time: '9:53', color: 'bg-green-500'},
           {name: 'Kelvin Kart', text: 'Lorem ipsum dolor, sit amet consectetur ', time: '9:53', color: 'bg-green-500', image: '/image/card2.webp'},
    ]
 
@@ -105,7 +105,7 @@ const Chat = () => {
          </div>
 
          {/*Third cols */}
-         <div className="w-full border flex flex-col rounded-r-md">
+         <div className="w-full border flex flex-col rounded-r-md relative">
           
             <div className="p-10 h-20 border flex items-center rounded-r-md">
                <div className="flex justify-between gap- items-center w-full">
@@ -164,17 +164,17 @@ const Chat = () => {
              </div>
              {/* The End */}
 
-             <div className="p-10 h-20 border flex items-center rounded-r-md">
+             <div className="p-10 h-20 border flex items-center absolute bottom-0 w-full" >
                <div className="flex justify-between items-center w-full">
-                  <form className="max-w-[700px] w-full border-2 border-gray-300 rounded-full flex items-center p-1">
-                 <input type="text" className="w-full  p-2" placeholder="Type Message here..."/>
+                  <form className="max-w-[800px] w-full border-2 border-gray-300 rounded-full flex items-center p-1">
+                 <input type="text" className="w-full p-2 rounded-full outline-none" placeholder="Type Message here..."/>
                    <div className="flex p-2 gap-2">
                     <Mic className="text-[#495568] size-6 font-bold cursor-pointer"/>
                     <Image className="text-[#495568] size-6 font-bold cursor-pointer"/>
                     <Link2 className="text-[#495568] size-6 font-bold rotate-90 cursor-pointer"/>
                    </div>
                   </form>
-                  <div className="w-12 h-12 rounded-full bg-purple-400 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center">
                     <Send className="text-[#495568] size-6 cursor-pointer text-white"/>
                     </div>
                    <div>
