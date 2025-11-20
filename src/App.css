@@ -5,6 +5,32 @@
   /* text-align: center; */
 }
 
+/* Thin WhatsApp-like scrollbar */
+.chat-scroll::-webkit-scrollbar {
+  width: 3px;
+}
+
+.chat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Scrollbar thumb (draggable part) */
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  cursor: grab; /* cursor when not clicking */
+}
+
+/* When user is dragging the scrollbar */
+.chat-scroll::-webkit-scrollbar-thumb:active {
+  cursor: grabbing;
+}
+
+/* Hover effect (optional) */
+.chat-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.35);
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
