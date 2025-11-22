@@ -1,16 +1,14 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+// import Chat from './components/shared/chat'
+import Contruction from "./components/shared/construction"
 import './App.css'
-import Chat from './components/shared/chat'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-     <div className='h-screen'>
-       <Chat />
-     </div>
+       <Contruction/>
+    //  <div className='h-screen'>
+    //    <Chat />
+    //  </div>
   )
 }
 
