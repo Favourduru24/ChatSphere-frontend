@@ -16,9 +16,9 @@ import {Phone} from "lucide-react"
                               <p className='text-[1rem] font-bold text-green-500'>Contact Us</p>
                            </button>
               
-                             <div className='flex flex-col mt-4 mb-4 justify-center items-center'>
-                               <p className='text-4xl font-semibold sm:max-w-3xl text-center leading-14 font-serif text-wrap '>We Take Privacy Very Serious.</p>
-                               <p className='text-gray-400 text-center text-[1rem] font-normal max-w-md mb-2'>We will never distribute your information. You can rest assured that your personal information, including your email address, will be kept in strict confidence</p>
+                             <div className='flex flex-col mt-4 mb-8 justify-center items-center'>
+                               <p className='text-4xl font-semibold sm:max-w-3xl text-center leading-14 font-serif text-wrap mb-2'>We Take Privacy Very Serious.</p>
+                               <p className='text-gray-400 text-center text-[1rem] font-normal max-w-2xl mb-2'>We will never distribute your information. You can rest assured that your personal information, including your email address, will be kept in strict confidence</p>
                             </div>
                        </div>
 

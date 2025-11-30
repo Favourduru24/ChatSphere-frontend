@@ -11,8 +11,8 @@ const Header = () => {
   return (
     <div className="py-4 sm:py-8 px-8 sm:px-16 flex items-center justify-between">
         <ul className="hidden sm:flex gap-5 items-center">
-           {navLink.map((nav) => (
-             <li className="font-semibold text-2xl font-san-serif">
+           {navLink.map((nav, index) => (
+             <li className="font-semibold text-2xl font-san-serif" key={index}>
                 {nav.label}
             </li> 
            ))}  

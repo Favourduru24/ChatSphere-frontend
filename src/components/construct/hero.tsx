@@ -6,12 +6,12 @@ const Hero = () => {
       {img: '/image/pics1.jpg', name: 'pics1'},
       {img: '/image/pics2.jpg', name: 'pics2'},
       {img: '/image/pics3.jpg', name: 'pics3'},
-      {img: '/image/pics1.jpg', name: 'pics1'},
+      // {img: '/image/pics1.jpg', name: 'pics1'},
 
     ]
 
   return (
-    <div className='py-8 sm:py-16 px-8 sm:px-16 '>
+    <div className='py-8 sm:py-16 px-8 sm:px-16'>
          <div className='flex flex-col justify-center w-full items-center'>
               <button className='border border-green-300 bg-[#EDFFF2] w-fit flex justify-center h-12 p-3  items-center gap-2 rounded-md '>
                 <Framer className='size-5'/>
@@ -37,8 +37,8 @@ const Hero = () => {
 
          </div>
           <div className='mt-10 gap-4 grid sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] grid-cols-[repeat(auto-fill,minmax(280px,1fr))]'>
-                 {Card.map((pics) => (
-                          <img src={pics.img} alt={pics.name} className='rounded-xl object-cover w-full h-[300px]'/>
+                 {Card.map((pics, index) => (
+                          <img src={pics.img} alt={pics.name} className='rounded-xl object-cover w-full h-[300px]' key={index}/>
                  ))}
                   
                </div>
