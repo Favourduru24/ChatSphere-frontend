@@ -21,7 +21,23 @@ const BASE_URL = import.meta.env.MODE === 'development' ?
          const {socket} = get()
         if(socket?.connected) return
 
-        //   const newSocket = 
+          const newSocket = io(BASE_URL, {
+            withCredentials: true,
+            autoConnect: true
+          })
+
+         set({socket: newSocket})
+
+         newSocket.on("connect", () => {
+             console.log(`Socket connected ${newSocket.id}`)
+         })
+
+         newSocket.on("online:users", (userIds) => {
+             console.log(`Online users ${userIds}`)
+             set({onlineUser: userIds})
+         })
+         
      },
+
      disconnectSocket: () => {},
   }))
