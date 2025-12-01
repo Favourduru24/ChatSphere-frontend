@@ -36,8 +36,15 @@ const BASE_URL = import.meta.env.MODE === 'development' ?
              console.log(`Online users ${userIds}`)
              set({onlineUser: userIds})
          })
-         
+
      },
 
-     disconnectSocket: () => {},
+     disconnectSocket: () => {
+        const {socket} = get()
+
+        if(socket) {
+             socket.disconnect()
+             set({socket: null})
+        }
+     },
   }))
