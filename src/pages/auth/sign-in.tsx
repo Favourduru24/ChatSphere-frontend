@@ -1,17 +1,26 @@
+import { Link } from "react-router-dom"
 
 const SignIn = () => {
 
   return (
     <section className="w-full flex justify-center items-center h-screen">
-         <div className="w-full max-w-xl flex flex-col gap-6 py-6 bg-white border border-[#f9fbfc] rounded-xl shadow-100 p-2 justify-center">
-                           <div>
+         <div className="w-full max-w-lg flex flex-col gap-6 py-6 bg-white border border-[#f9fbfc] rounded-xl shadow-100 p-2 justify-center">
+                              <div className="w-full flex flex-col gap-3">
+                                <div className="flex gap-2 justify-center items-center">
+                                  <div className="w-8 h-8 rounded-md bg-purple-400 flex items-center justify-center">
+                          <p className="font-semibold text-white">C</p>
+                         </div>
+                            <p className="text-xl font-semibold">chatSphere</p>
+                         </div>
 
-                           </div>
+                       <p className="text-2xl font-semibold text-center font-sans text-gray-400 underline">Login to your account</p>
+                              </div>
+
               <form className="flex flex-col gap-4">
-                 <div className="w-full flex flex-col gap-2.5 px-6 relative">
+                 {/* <div className="w-full flex flex-col gap-2.5 px-6 relative">
                      <label className="text-sm font-normal text-gray-400">Name</label>
                <input className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-300" type="name" id="name" placeholder="Username"/>
-                 </div>
+                 </div> */}
 
                  <div className="w-full flex flex-col gap-2.5 px-6 relative">
                      <label className="text-sm font-normal text-gray-400">Email</label>
@@ -23,13 +32,15 @@ const SignIn = () => {
                <input className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-300" type="password" id="password" placeholder="pa**word"/>
                  </div>
 
-                  <div className="w-full flex flex-col gap-2.5 px-6 relative">
-                      <button className="w-full bg-purple-600 rounded-md">
+                  <div className="w-full flex flex-col gap-2.5 px-6 relative mt-4">
+                      <button className="w-full bg-purple-800 rounded-md">
                         <p className="text-white font-semibold text-xl p-2 ">Sign In</p>
                       </button>
                  </div>
               </form>
+                   <p className="text-sm font-medium text-end mx-6">Dont have an account <Link to="/sign-up"><span className="text-purple-600 cursor-pointer">Sign Up</span></Link></p>
          </div>
+         
     </section>
   )
   
