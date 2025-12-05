@@ -1,9 +1,31 @@
 import { Link } from "react-router-dom"
+import {z} from 'zod'
+import { useAuth } from "@/hooks/use-auth"
+import { useState } from "react"
 
 const SignIn = () => {
 
+  const {register, isSigningUp} = useAuth()
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [avatar, setAvatar] = useState('')
+
+  const formSchema = z.object({
+     name: z.string().min(1, "Name is required"),
+     email: z.string().email("Invalid email").min(1, "Email is required"),
+     password: z.string().min(6, "Password must be at least 6 characters")
+  })
+
+   const handleSubmit = (values: z.infer<typeof formSchema>) => {
+        if(!isSigningUp) return
+       register({name, email, password, avatar})
+   }
+
   return (
-    <section className="w-full flex lg:flex-row items-center justify-center h-screen gap-5 px-5">
+    <section className="w-full flex lg:flex-row items-center justify-center h-screen gap-5 px-5" 
+    onSubmit={handleSubmit}
+    >
 
          <div className="w-full max-w-lg flex flex-col gap-6 py-6 bg-white border border-[#ebeeed] rounded-xl shadow-sm p-2 justify-center">
                               <div className="w-full flex flex-col gap-3">
@@ -20,12 +42,12 @@ const SignIn = () => {
               <form className="flex flex-col gap-4">
                  <div className="w-full flex flex-col gap-2.5 px-6 relative">
                      <label className="text-sm font-normal text-gray-400">Email</label>
-               <input className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-300 font-sans font-normal outline-purple-600" type="email" id="email" placeholder="email@gmail.com"/>
+               <input className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-400 font-sans font-normal outline-purple-600" type="email" id="email" placeholder="email@gmail.com"/>
                  </div>
 
                  <div className="w-full flex flex-col gap-2.5 px-6 relative">
                      <label className="text-sm font-normal text-gray-400 ">Password</label>
-               <input className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-300 font-sans font-normal outline-purple-600" type="password" id="password" placeholder="pa**word"/>
+               <input className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-400 font-sans font-normal outline-purple-600" type="password" id="password" placeholder="pa**word"/>
                  </div>
 
                   <div className="w-full flex flex-col gap-2.5 px-6 relative mt-4">

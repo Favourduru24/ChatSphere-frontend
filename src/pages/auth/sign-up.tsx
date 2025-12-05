@@ -20,21 +20,21 @@ const SignUp = () => {
               <form className="flex flex-col gap-4">
                  <div className="w-full flex flex-col gap-2.5 px-6 relative">
                      <label className="text-sm font-normal text-gray-400">Name</label>
-               <input className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-300 font-sans font-normal outline-purple-600" type="name" id="name" placeholder="Username"/>
+               <input className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-400 font-sans font-normal outline-purple-600" type="name" id="name" placeholder="Username"/>
                  </div>
 
                  <div className="w-full flex flex-col gap-2.5 px-6 relative">
                      <label className="text-sm font-normal text-gray-400">Email</label>
-               <input className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-300 font-sans font-normal outline-purple-600" type="email" id="email" placeholder="email@gmail.com"/>
+               <input className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-400 font-sans font-normal outline-purple-600" type="email" id="email" placeholder="email@gmail.com"/>
                  </div>
 
                  <div className="w-full flex flex-col gap-2.5 px-6 relative">
                      <label className="text-sm font-normal text-gray-400">Password</label>
-               <input className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-300 font-sans font-normal outline-purple-600" type="password" id="password" placeholder="pa**word"/>
+               <input className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-400 font-sans font-normal outline-purple-600" type="password" id="password" placeholder="pa**word"/>
                  </div>
 
                   <div className="w-full flex flex-col gap-2.5 px-6 relative mt-4">
-                      <button className="w-full bg-purple-800 hover:bg-purple-700 focus:bg-purple-500 rounded-md cursor-pointer h-12">
+                      <button className="w-full bg-purple-800 hover:bg-purple-700 focus:bg-purple-500 rounded-md cursor-pointer h-12 shadow-sm">
                         <p className="text-white font-semibold text-xl p-2 ">Sign Up</p>
                       </button>
                  </div>
