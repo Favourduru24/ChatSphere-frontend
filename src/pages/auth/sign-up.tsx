@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { z } from "zod"
 import { useAuth } from "@/hooks/use-auth"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import type { RegisterType } from "@/types/auth.type"
 import { Loader2 } from "lucide-react"
@@ -35,7 +35,7 @@ const SignUp = () => {
   }
 
   return (
-    <section className="w-full flex lg:flex-row items-center justify-center h-screen gap-5 px-5">
+    <section className="w-full flex lg:flex-row items-center justify-center h-screen gap-5 px-5 ">
       {/* Form Container */}
       <div className="w-full max-w-lg flex flex-col gap-6 py-6 bg-white border border-[#ebeeed] rounded-xl shadow-sm p-2 justify-center">
         {/* Logo & Title */}
@@ -115,7 +115,7 @@ const SignUp = () => {
                   <span className="text-[1rem]">Loading...</span>
                 </div>
               ) : (
-                 <span className="text-[1.2rem]">Sign In</span>
+                 <span className="text-[1.2rem]">Sign Up</span>
               )}
             </button>
           </div>

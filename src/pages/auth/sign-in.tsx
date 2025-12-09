@@ -98,7 +98,7 @@ const SignIn = () => {
                   <span>Loading...</span>
                 </div>
               ) : (
-                "Sign In"
+                <span className="text-[1.2rem]">Sign In</span>
               )}
             </button>
           </div>
