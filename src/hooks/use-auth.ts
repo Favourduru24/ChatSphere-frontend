@@ -30,7 +30,6 @@ interface AuthState {
             set({isSigningUp: true})
 
             try {
-
                 const response = await API.post('/auth/register', data)
                 set({user: response.data.user})
                 useSocket.getState().connectSocket()

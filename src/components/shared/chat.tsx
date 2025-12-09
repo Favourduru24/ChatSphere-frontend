@@ -1,8 +1,13 @@
 import { chatData, chatMessage, navLink } from "@/constants"
 import Header from "./header"
-import {Menu, Plus, Search, Phone, Mic, Image, Link2, Send} from "lucide-react"
+import {Menu, Plus, Search, Phone, Mic, Image, Link2, Send, PenBox} from "lucide-react"
+import { useState } from "react"
 
 const Chat = () => {
+
+   const [open, setOpen] = useState(true)
+
+  
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
@@ -11,7 +16,7 @@ const Chat = () => {
   {/* MAIN LAYOUT */}
   <div className="flex flex-1 min-h-0">
     {/* LEFT SIDEBAR */}
-    <div className="max-w-[70px] w-full flex flex-col p-2 items-center bg-[#F9FBFC] border rounded-l-md max-sm:hidden">
+    <div className="max-w-[70px] w-full flex flex-col p-2 items-center bg-[#F9FBFC] border rounded-l-md max-sm:hidden ">
       <div className="w-8 h-8 rounded-md bg-purple-400 flex items-center justify-center">
         <p className="font-semibold text-white">C</p>
       </div>
@@ -37,12 +42,12 @@ const Chat = () => {
     </div>
 
     {/* MIDDLE CHAT LIST */}
-    <div className="max-w-[340px] w-full flex flex-col bg-[#F9FBFC] border hidden lg:flex">
+    <div className="max-w-[340px] w-full flex flex-col bg-[#F9FBFC] border hidden lg:flex relative">
       {/* Title */}
       <div className="p-2 h-16 border flex items-center">
         <div className="flex justify-between items-center w-full">
           <p className="text-xl font-semibold">chatSphere</p>
-          <Menu className="text-[#495568] size-5" />
+          <PenBox className="text-[#495568] size-5 cursor-pointer" />
         </div>
       </div>
 
@@ -57,6 +62,36 @@ const Chat = () => {
           </p>
           <Plus className="text-[#495568] size-7 cursor-pointer" />
         </div>
+
+         {open && (
+            <div className=" absolute left-[50%] max-w-[300px] w-full flex flex-col bg-[#F9FBFC] border lg:flex  h-[70vh]">
+             <div className="flex-1 min-h-0 overflow-y-auto chat-scroll">
+        <div className="flex flex-col ">
+          {chatData.map((chat, index) => (
+            <div
+              key={index}
+              className="h-20 flex items-center cursor-pointer hover:bg-[#EDF2FE]"
+            >
+              <div className="w-full p-4">
+                <div className="flex justify-between">
+                  <div className="flex gap-4 items-center">
+                    <div className={`w-10 h-10 rounded-full ${chat.color}`}></div>
+
+                    <div>
+                      <p className="text-lg font-semibold">{chat.name}</p>
+                      <p className="text-sm text-[#8B92A1]">{chat.text}</p>
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-[#CCCFD9]">{chat.time}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+            </div>
+         )}
       </div>
 
       {/* Scrollable Chat List */}

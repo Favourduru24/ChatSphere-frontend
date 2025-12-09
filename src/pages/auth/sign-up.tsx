@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { z } from "zod"
 import { useAuth } from "@/hooks/use-auth"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import type { RegisterType } from "@/types/auth.type"
 import { Loader2 } from "lucide-react"
@@ -115,7 +115,7 @@ const SignUp = () => {
                   <span className="text-[1rem]">Loading...</span>
                 </div>
               ) : (
-                 <span className="text-[1.2rem]">Sign In</span>
+                 <span className="text-[1.2rem]">Sign Up</span>
               )}
             </button>
           </div>
