@@ -5,9 +5,11 @@ import { useState } from "react"
 import { toast } from "sonner"
 import type { LoginType } from "@/types/auth.type"
 import { Loader2 } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 const SignIn = () => {
   const { login, isLoggingIn } = useAuth()
+  const navigate = useNavigate()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -17,7 +19,7 @@ const SignIn = () => {
     password: z.string().min(6, "Password must be at least 6 characters").max(17, "Password must be less than 17 characters")
   })
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const result = formSchema.safeParse({ email, password })
 
     if (!result.success) {
@@ -27,11 +29,18 @@ const SignIn = () => {
     }
 
     const data: LoginType = result.data
-    login(data)
+    const success = await login(data)
+
+    if (success) {
+    navigate("/chat");
+    toast.success("Login Successfully!");
+  }
+
   }
 
   return (
     <section className="w-full flex lg:flex-row items-center justify-center h-screen gap-5 px-5 ">
+      
       {/* Form Container */}
       <div className="w-full max-w-lg flex flex-col gap-6 py-6 bg-white border border-[#ebeeed] rounded-xl shadow-sm p-2 justify-center">
         {/* Logo & Title */}
@@ -94,8 +103,8 @@ const SignIn = () => {
             >
               {isLoggingIn ? (
                 <div className="flex gap-2 items-center">
-                  <Loader2 className="animate-spin" />
-                  <span>Loading...</span>
+                  <Loader2 className="animate-spin size-5" />
+                  <span className="text-[1rem]">Loading...</span>
                 </div>
               ) : (
                 <span className="text-[1.2rem]">Sign In</span>
@@ -114,11 +123,11 @@ const SignIn = () => {
       </div>
 
       {/* Image Section */}
-      <div className="w-full h-full bg-purple-50 hidden lg:block">
+      <div className="w-full h-full bg-purple-50 hidde lg:block px-10 pt-28 flex items-center justify-center">
         <img
-          src="/image/auth.png"
+          src="/image/sign-up.svg"
           alt="Authentication Illustration"
-          className="w-full h-full object-cover"
+          className=" object-contain w-full h-[70vh]"
         />
       </div>
     </section>
