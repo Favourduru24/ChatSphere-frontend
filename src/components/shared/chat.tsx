@@ -1,11 +1,12 @@
 import { chatData, chatMessage, navLink } from "@/constants"
 import Header from "./header"
-import {Plus, Search, Phone, Mic, Image, Link2, Send, PenBox} from "lucide-react"
+import {Plus, Search, Phone, Mic, Image, Link2, Send, PenBox, User2, User2Icon, Users2Icon, Users, ArrowLeft} from "lucide-react"
 import { useEffect, useRef, useState} from "react"
 
 const Chat = () => {
 
    const [open, setOpen] = useState(false)
+   const [isGroupOpen, setIsGroupOpen] = useState(false)
    const chatModalRef = useRef(null)
 
     useEffect(() => {
@@ -83,18 +84,108 @@ const Chat = () => {
         </div>
 
          {open ? (
-            <div className="absolute left-[50%] top-20 max-w-[350px] w-full bg-[#F9FBFC] border flex flex-col z-10 rounded-t-lg min-h-0 h-[80vh]" ref={chatModalRef}>
-                <div className="px-11">
-                <input type="text" className="w-full h-8 m"/>
-                  
+            <div className="absolute left-[50%] top-20 max-w-[350px] w-full bg-[#F9FBFC] border flex flex-col z-30 rounded-t-lg min-h-0 h-full" ref={chatModalRef}>
+                        <div className="relative">
+
+                          {isGroupOpen ? <div className="absolute top-0 max-w-[350px] w-full rounded-t-lg min-h-0 h-[85%] bg-[#F9FBFC] border flex flex-col z-10">
+                            <div className="px-3 flex items-center gap-1 py-3">
+                               <ArrowLeft className="size-9 text-gray-500 hover:bg-[#d4d8e2] p-2 m- hover:rounded-b-sm hover:text-white" onClick={() => setIsGroupOpen(!isGroupOpen)}/>
+                           <p className="text-black text-2xl font-semibold">New group</p>
+                           </div>
+                <div className="px-4">
+                   <form className="max-w-[400px] border-b-2 border-b-[#8E8AD8] mt-2 mb-2">
+                    <input type="text" className="w-full h-8 outline-none" name="text" placeholder="Search name or email"/>
+                   </form>
                 </div>
-             <div className="flex-1 min-h-0 overflow-y-auto chat-scroll">
+
+                      <div className="px-4 py-4">
+                        <p className="text-sm font-medium">All Contacts</p>
+                      </div>
+
+                    <div className="flex-1 min-h-0 overflow-y-auto chat-scroll">
         <div className="flex flex-col ">
           {chatData.map((chat, index) => (
             <div
               key={index}
-              className="h-20 flex items-center cursor-pointer hover:bg-[#EDF2FE]"
+              className="h-16 flex items-center cursor-pointer hover:bg-[#EDF2FE]"
             >
+              <div className="w-full p-4">
+                <div className="flex justify-between items-center">
+                  <div className="flex gap-4 items-center">
+                    <div className={`w-10 h-10 rounded-full ${chat.color}`}></div>
+
+                    <div>
+                      <p className="text-lg font-semibold">{chat.name}</p>
+                      <p className="text-sm text-[#8B92A1]">{chat.text}</p>
+                    </div>
+                  </div>
+                  
+                   <input type="checkbox" className="size-4 accent-[#8E8AD8] cursor-pointer outline-none border-0 border-none"/>
+                  </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+                          </div> : ''}
+
+                     <div className="px-4 py-3">
+                     <p className="text-black text-2xl font-semibold">New Chat</p>
+                     </div>
+                <div className="px-4">
+                   <form className="max-w-[400px] border-b-2 border-b-[#8E8AD8] mt-3 mb-2">
+                    <input type="text" className="w-full h-8 outline-none" name="text" placeholder="Search name or email"/>
+                   </form>
+                </div>
+                 
+                  <div className="flex flex-col gap-3 my-2">
+                      <div
+              className="h-12 flex items-center cursor-pointer hover:bg-[#d4d8e2] hover:rounded-md"
+               onClick={() => setIsGroupOpen(!isGroupOpen)}>
+              <div className="w-full p-4">
+                <div className="flex justify-between">
+                  <div className="flex gap-4 items-center">
+                    <div className={`w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center`}>
+                        <Users2Icon className="size-5 text-white"/>
+                    </div>
+
+                    <div>
+                      <p className="text-lg font-semibold">New group</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+             <div
+              className="h-12 flex items-center cursor-pointer hover:bg-[#d4d8e2] hover:rounded-md "
+              >
+              <div className="w-full p-4">
+                <div className="flex justify-between">
+                  <div className="flex gap-4 items-center">
+                    <div className={`w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center`}>
+                      <User2 className="size-5 text-white"/>
+                    </div>
+
+                    <div>
+                      <p className="text-lg font-semibold ">New contacts</p>
+                    </div>
+                    
+                  </div>
+
+                </div>
+              </div>
+            </div>
+                  </div>
+
+             <div className="flex-1 min-h-0 overflow-y-auto chat-scroll">
+        <div className="flex flex-col ">
+          {chatData.map((chat, index) => (
+            <div
+            key={index}
+              className="h-16 flex items-center cursor-pointer hover:bg-[#EDF2FE]"
+              >
               <div className="w-full p-4">
                 <div className="flex justify-between">
                   <div className="flex gap-4 items-center">
@@ -113,6 +204,7 @@ const Chat = () => {
         </div>
       </div>
             </div>
+          </div>
          ): ''}
       </div>
 
