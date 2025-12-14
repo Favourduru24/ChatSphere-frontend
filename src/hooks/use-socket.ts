@@ -6,7 +6,7 @@ const BASE_URL = import.meta.env.MODE === 'development' ?
 
  interface SocketState {
      socket: Socket | null
-     onlineUser: string[]
+     onlineUsers: string[]
      connectSocket: () => void
      disconnectSocket: () => void
  }
@@ -14,7 +14,7 @@ const BASE_URL = import.meta.env.MODE === 'development' ?
   export const useSocket = create<SocketState>((set, get) => ({
       
      socket: null,
-     onlineUser: [],
+     onlineUsers: [],
 
      connectSocket: () => {
        
@@ -34,7 +34,7 @@ const BASE_URL = import.meta.env.MODE === 'development' ?
 
          newSocket.on("online:users", (userIds) => {
              console.log(`Online users ${userIds}`)
-             set({onlineUser: userIds})
+             set({onlineUsers: userIds})
          })
 
      },
