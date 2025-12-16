@@ -1,4 +1,14 @@
-import { Calendar, Search, Sparkle } from "lucide-react";
+import type { ChatType } from "@/types/chat.type";
+import { Calendar, Search } from "lucide-react";
+
+ type ChatItem = {
+  // id: string;
+  name: string;
+  text: string;
+  time: string;
+  color: string; // Tailwind bg class like "bg-purple-400"
+  // image?: string;
+};
 
  export const navLink = [
     {
@@ -9,7 +19,7 @@ import { Calendar, Search, Sparkle } from "lucide-react";
     },
    ]
 
-   export const chatData = [
+   export const chatData: ChatItem[] = [
           {name: 'Favour Duru', text: 'I have sent you the link', time: '9:53', color: 'bg-red-500', },
           {name: 'Duru Pristine', text: 'How should i start', time: '7:53', color: 'bg-purple-500'},
           {name: 'Kelvin Kart', text: 'I have been working', time: '9:53', color: 'bg-green-500'},
@@ -22,6 +32,55 @@ import { Calendar, Search, Sparkle } from "lucide-react";
           {name: 'Kelvin Port', text: 'How did you start', time: '12:53', color: 'bg-red-500'},
           {name: 'Kelvin Port', text: 'How did you start', time: '12:53', color: 'bg-red-500'},
           {name: 'Duru Pristine', text: 'How should i start', time: '12:53', color: 'bg-orange-500'},
+   ]
+
+  //  export type ChatType = {
+  //      _id: string
+  //      lastMessage: MessageType
+  //      participants: UserType[]
+  //      isGroup: boolean
+  //      createdBy: string
+  //      groupName?: string
+  //      status?: string
+  //      createdAt: string
+  //      updatedAt: string
+  //  }
+
+//   export interface UserType {
+//     id: string,
+//     name: string,
+//     email: string,
+//     avatar: string | null,
+//     createdAt: Date,
+//     updatedAt: Date
+// }
+
+// export type MessageType = {
+//     _id: string
+//     content: String | null
+//     image: string | null
+//     sender: UserType | null
+//     replyTo: MessageType | null
+//     chatId: string
+//     createdAt: string
+//     updatedAt: string
+// }
+
+// lastMessage: [{_id: '1', content: 'Hey how are you', image: null, sender: null, replyTo: null, chatId: '1', createdAt: '', updatedAt:'1',     }],
+
+   export const chaty: ChatType[] = [
+          {_id: '1', isGroup: false, createdAt: '9:53', updatedAt: '9:53', participants: [{id: '1', name: 'Duru Pristine', email: 'd@gmail.com', avatar: '', createdAt: '', updatedAt: ''}], createdBy: 'Duru Pristine',  },
+          {_id: 'Duru Pristine', isGroup: true, createdAt: '7:53', groupName: 'Dev Group', updatedAt: '9:53', participants: [{id: '1',name: 'Henry', email: 'd@gmail.com', avatar: '', createdAt: '9:53', updatedAt: ''}], createdBy: 'Duru Pristine'},
+          {_id: 'Kelvin Kart', isGroup: false, createdAt: '9:53', updatedAt: '9:53', participants: [{id: '1', name: 'Kelvin hart', email: 'd@gmail.com', avatar: '', createdAt: '', updatedAt: '9:53'}], createdBy: 'Duru Pristine'},
+          {_id: 'Kelvin Port', isGroup: false, createdAt: '10:53',  updatedAt: '9:53', participants: [{id: '1', name: 'James Carry', email: 'd@gmail.com', avatar: '', createdAt: '', updatedAt: '9:53'}], createdBy: 'Duru Pristine'},
+          {_id: '2', isGroup: true, createdAt: '1:53', groupName: 'Tech Group', updatedAt: '9:53', participants: [{id: '1', name: 'John homes', email: 'd@gmail.com', avatar: '', createdAt: '', updatedAt: ''}], createdBy: 'Duru Pristine'},
+          {_id: '3', isGroup: true, createdAt: '12:53', groupName: 'Web Dev Group', updatedAt: '9:53', participants: [{id: '1', name: 'D', email: 'd@gmail.com', avatar: '', createdAt: '', updatedAt: ''}], createdBy: 'Duru Pristine'},
+          {_id: '4', isGroup: false, createdAt: '12:53',  updatedAt: '9:53', participants: [{id: '1', name: 'D', email: 'd@gmail.com', avatar: '', createdAt: '9:53', updatedAt: '9:53'}], createdBy: 'Duru Pristine'},
+          {_id: '5', isGroup: false, createdAt: '12:53',  updatedAt: '9:53', participants: [{id: '1', name: 'D', email: 'd@gmail.com', avatar: '', createdAt: '9:53', updatedAt: '9:53'}], createdBy: 'Duru Pristine'},
+          {_id: '6', isGroup: false, createdAt: '12:53',  updatedAt: '9:53', participants: [{id: '1', name: 'D', email: 'd@gmail.com', avatar: '', createdAt: '9:53', updatedAt: ''}], createdBy: 'Duru Pristine'},
+          {_id: '7', isGroup: false, createdAt: '12:53',  updatedAt: '9:53', participants: [{id: '1', name: 'D', email: 'd@gmail.com', avatar: '', createdAt: '', updatedAt: ''}], createdBy: 'Duru Pristine'},
+          {_id: '8', isGroup: false, createdAt: '12:53', updatedAt: '9:53', participants: [{id: '1', name: 'D', email: 'd@gmail.com', avatar: '', createdAt: '', updatedAt: ''}], createdBy: 'Duru Pristine'},
+          {_id: '9', isGroup: true, createdAt: '12:53', groupName: 'Mern Stack Group', updatedAt: '9:53', participants: [{id: '1', name: 'D', email: 'd@gmail.com', avatar: '', createdAt: '', updatedAt: ''}], createdBy: 'Duru Pristine'},
    ]
 
      export const chatMessage = [

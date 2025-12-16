@@ -19,7 +19,7 @@ interface ChatState {
 
       fetchAllUser: () => void
       fetchChats: () => void
-      createChat: (payload: CreateChatType | null) => void
+      createChat: (payload: CreateChatType) => Promise<ChatType | null>
       fetchSingleChat: (chatId: string) => void
       addNewChat: (newChat: ChatType) => void
     //   sendMessage: 
@@ -68,16 +68,34 @@ interface ChatState {
                 ...payload
              })
 
-              return re
+             get().addNewChat( response.data.chat)
+             toast.success("Chat created successfully!")
+              return response.data.chat
            } catch(error: any) {
-
+              toast.error(error?.response?.data?.message || 'Failed to create chats')
+              return null
+           } finally{
+             set({isCreatingChat: false})
            }
      },
      fetchSingleChat: () => {
           set({isSigleChatLoading: true})
      },
 
-    addNewChat: () => ({
+    addNewChat: (newChat: ChatType) =>  {
+       set((state) => {
+         const existingChatIndex = state.chats.findIndex((c) => c._id == newChat._id)
 
-    }) 
+          if(existingChatIndex !== -1){
+             return {
+               chats: [newChat, ...state.chats.filter((c) => c._id !== newChat._id)]
+             }
+          } else {
+             return {
+              chats: [newChat, ...state.chats]
+             }
+          }
+       } 
+      )
+    }
  }))

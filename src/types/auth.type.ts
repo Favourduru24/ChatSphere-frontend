@@ -15,6 +15,6 @@ export interface UserType {
     name: string,
     email: string,
     avatar: string | null,
-    createdAt: Date,
-    updatedAt: Date
+    createdAt: string | Date,
+    updatedAt: string | Date
 }

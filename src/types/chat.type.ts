@@ -13,7 +13,7 @@ export type MessageType = {
 
 export type ChatType = {
     _id: string
-    lastMessage: MessageType
+    lastMessage?: MessageType
     participants: UserType[]
     isGroup: boolean
     createdBy: string
