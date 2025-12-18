@@ -42,17 +42,17 @@ import { Calendar, Search } from "lucide-react";
   //   updatedAt: string | Date
 
     export const userData = [
-          {id: 1, name: 'Favour Duru', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
-          {id: 2, name: 'Favour Duru', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
-          {id: 3, name: 'Favour Duru', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
-          {id: 4, name: 'Favour Duru', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
-          {id: 5, name: 'Favour Duru', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
-          {id: 6, name: 'Kelvin Hart', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
-          {id: 7, name: 'Duru Pristine', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
-          {id: 8, name: 'James Sam', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
-          {id: 9, name: 'Favour Duru', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
-          {id: 10, name: 'Devin Dax', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
-          {id: 11, name: 'Favour Duru', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'}
+          {id: '1', name: 'Favour Duru', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
+          {id: '2', name: 'Favour Duru', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
+          {id: '3', name: 'Favour Duru', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
+          {id: '4', name: 'Favour Duru', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
+          {id: '5', name: 'Favour Duru', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
+          {id: '6', name: 'Kelvin Hart', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
+          {id: '7', name: 'Duru Pristine', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
+          {id: '8', name: 'James Sam', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
+          {id: '9', name: 'Favour Duru', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
+          {id: '10', name: 'Devin Dax', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'},
+          {id: '11', name: 'Favour Duru', email: 'durupristine@gmail.com', avatar: '', createdAt: '12:04', updatedAt: '1:02'}
    ]
 
   //  export type ChatType = {
