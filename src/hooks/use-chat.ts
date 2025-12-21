@@ -7,7 +7,7 @@ import { create } from "zustand";
 interface ChatState {
      chats: ChatType[]
      users: UserType[]
-     sigleChat: {
+     singleChat: {
         chat: ChatType
         message: MessageType[]
      } | null
@@ -15,26 +15,27 @@ interface ChatState {
       isChatLoading: boolean
       isUsersLoading: boolean
       isCreatingChat: boolean
-      isSigleChatLoading: boolean
+      isSingleChatLoading: boolean
 
       fetchAllUser: () => void
       fetchChats: () => void
       createChat: (payload: CreateChatType) => Promise<ChatType | null>
       fetchSingleChat: (chatId: string) => void
       addNewChat: (newChat: ChatType) => void
-    //   sendMessage: 
+      updateChatLastMessage: (chatId: string, lastMessage: MessageType) => void ,
+      addNewMessage: (chatId: string, message: MessageType) => void
 }
 
  
  export const useChat = create<ChatState>()((set, get) => ({
      chats: [],
      users: [],
-     sigleChat: null,
+     singleChat: null,
 
      isChatLoading: false,
      isUsersLoading: false,
      isCreatingChat: false,
-     isSigleChatLoading: false,
+     isSingleChatLoading: false,
 
      fetchAllUser: async () => {
           set({isUsersLoading: true})
@@ -73,18 +74,27 @@ interface ChatState {
               return response.data.chat
            } catch(error: any) {
               toast.error(error?.response?.data?.message || 'Failed to create chats')
-              return null
            } finally{
              set({isCreatingChat: false})
            }
      },
-     fetchSingleChat: () => {
-          set({isSigleChatLoading: true})
+     fetchSingleChat: async (chatId: string) => {
+          set({isSingleChatLoading: true})
+
+          try{
+           const {data} = await API.get(`/chat/${chatId}`)
+           set({singleChat: data})
+          }catch(error: any) {
+              toast.error(error?.response?.data?.message || 'Failed to fetch single chats')
+              return null
+           } finally{
+             set({isSingleChatLoading: false})
+           }
      },
 
     addNewChat: (newChat: ChatType) =>  {
        set((state) => {
-         const existingChatIndex = state.chats.findIndex((c) => c._id == newChat._id)
+         const existingChatIndex = state.chats.findIndex((c) => c._id === newChat._id)
 
           if(existingChatIndex !== -1){
              return {
@@ -97,5 +107,31 @@ interface ChatState {
           }
        } 
       )
+    },
+    updateChatLastMessage: (chatId, lastMessage) => {
+         set((state) => {
+           const chat = state.chats.find((c) => c._id === chatId)
+
+           if(!chat) return state
+
+            return {
+               chats: [
+                {...chat, lastMessage},
+                ...state.chats.filter((c) => c._id !== chatId)
+               ]
+            }
+         })
+    },
+    addNewMessage: (chatId, message) => {
+       const chat = get().singleChat
+
+       if(chat?.chat._id === chatId) {
+         set({
+             singleChat: {
+               chat: chat.chat,
+               message: [...chat.message, message]
+             }
+         })
+       }
     }
  }))

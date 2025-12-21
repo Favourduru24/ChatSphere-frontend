@@ -6,9 +6,9 @@ interface Prop {
 
 const AppWrapper = ({children}: Prop) => {
   return (
-    <div>
+    <>
       {children}
-    </div>
+    </>
   )
 }
 

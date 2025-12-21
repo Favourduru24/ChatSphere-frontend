@@ -36,9 +36,9 @@ export const getOtherUserAndGroup = (chat: ChatType, currentUserId: string | nul
       }
      }
 
-     const other = chat?.participants?.find((p) => p.id !== currentUserId)
+     const other = chat?.participants?.find((p) => p._id !== currentUserId)
 
-      const isOnline = isUserOnline(other?.id ?? '')
+      const isOnline = isUserOnline(other?._id ?? '')
 
      return {
       name: other?.name || 'Unknown',

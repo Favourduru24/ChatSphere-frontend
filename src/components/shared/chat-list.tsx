@@ -1,7 +1,6 @@
 import { useAuth } from "@/hooks/use-auth";
 import { getOtherUserAndGroup } from "@/lib/utils";
 import type { ChatType } from "@/types/chat.type"
-import { useLocation } from "react-router-dom"
 
  interface PropsType {
    chat: ChatType;
@@ -10,8 +9,6 @@ import { useLocation } from "react-router-dom"
  }
 
 const ChatList = ({chat, onClick, currentUserId}: PropsType) => {
-
-    const {pathname} = useLocation()
 
 
     const {lastMessage, createdAt, createdBy} = chat || {}
@@ -27,12 +24,11 @@ const getLastMessage = () =>  {
 
      if(lastMessage.image) return "Photo"
      if(isGroup && lastMessage.sender) {
-       return `${lastMessage.sender.id === currentUserId ? 'You' : lastMessage.sender.name} : ${lastMessage.content} `
+       return `${lastMessage.sender._id === currentUserId ? 'You' : lastMessage.sender.name} : ${lastMessage.content} `
      }
 
      return lastMessage.content
 }
-
 
   return (
     <div

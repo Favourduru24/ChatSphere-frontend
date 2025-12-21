@@ -6,12 +6,15 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/use-auth';
 import NewChat from './newchat-popover';
 import { chaty } from '@/constants';
+import { useSocket } from '@/hooks/use-socket';
+import type { ChatType, MessageType } from '@/types/chat.type';
 
 const SideBarWrapper = () => {
-  const { fetchChats, chats, isChatLoading, isUsersLoading } = useChat();
+  const { fetchChats, chats, isChatLoading, isUsersLoading, addNewChat, updateChatLastMessage} = useChat();
   const { user } = useAuth();
+  const {socket} = useSocket()
 
-  const currentUserId = user?.id ?? "";
+  const currentUserId = user?._id ?? "";
   const navigate = useNavigate();
 
   const onRoute = (id: string) => navigate(`/chat/${id}`);
@@ -26,6 +29,7 @@ const SideBarWrapper = () => {
   const toggleOpen = () => setOpen(p => !p);
   const toggleCreateGroup = () => setCreateGroupModal(p => !p);
 
+
   useEffect(() => {
     fetchChats();
   }, [fetchChats]);
@@ -38,10 +42,44 @@ const SideBarWrapper = () => {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [open]);
+
+      useEffect(() => {
+        if(!socket) return
+        const handleNewChat = (newChat: ChatType) => {
+           console.log('Recieved new chat', newChat)
+            addNewChat(newChat)
+        }
+
+        socket.on('chat:new', handleNewChat)
+
+        return () => {
+           socket.off('chat:new', handleNewChat)
+        }
+
+      }, [addNewChat, socket])
+
+      useEffect(() => {
+      if(!socket) return
+
+       const handleChatUpdate = (data: {chatId: string, lastMessage: MessageType}) => {
+  
+          console.log('Recieved update on chat', data.lastMessage)   
+
+           updateChatLastMessage(data.chatId, data.lastMessage)
+        }
+         
+        socket.on('chat:update', handleChatUpdate)
+
+        return () => {
+           socket.off('chat:update', updateChatLastMessage)
+        }
+      }, [socket, updateChatLastMessage])
+
+      console.log(chats, 'Chat-Data')
 
   return (
-    <div className="max-w-[350px] w-full flex-col bg-[#F9FBFC] border hidden lg:flex relative">
+    <div className="max-w-[350px] w-full flex-col bg-[#F9FBFC] border-r border-t hidden lg:flex relative flex-1 min-h-0">
       <div className="px-4 py-3 border-b flex items-center justify-between">
         <div>
           <p className="text-lg font-semibold">chatSphere</p>
@@ -61,6 +99,7 @@ const SideBarWrapper = () => {
         <NewChat
           currentUserId={currentUserId}
           open={open}
+          setOpen={setOpen}
           toggleCreateGroup={toggleCreateGroup}
           isUsersLoading={isUsersLoading}
           chatModalRef={chatModalRef}

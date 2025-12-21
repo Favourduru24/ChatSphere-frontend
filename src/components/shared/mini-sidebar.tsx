@@ -2,7 +2,7 @@ import { navLink } from '@/constants'
 
 const MiniSidebar = () => {
   return (
-     <div className="max-w-[70px] w-full flex flex-col p-2 items-center bg-[#F8FAFC] border rounded-l-md max-sm:hidden ">
+     <div className="max-w-[70px] w-full flex flex-col p-2 items-center bg-[#F8FAFC] border rounded-l-md max-sm:hidden">
       <div className="w-8 h-8 rounded-md bg-purple-400 flex items-center justify-center">
         <p className="font-semibold text-white">C</p>
       </div>
