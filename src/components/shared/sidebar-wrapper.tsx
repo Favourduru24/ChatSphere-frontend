@@ -79,7 +79,6 @@ const SideBarWrapper = () => {
       }, [socket, updateChatLastMessage])
 
       // console.log(chats, 'Chat-Data')
-      console.log(document.cookie)
 
   return (
     <div className="max-w-[350px] w-full flex-col bg-[#F9FBFC] border-r border-t hidden lg:flex relative flex-1 min-h-0">

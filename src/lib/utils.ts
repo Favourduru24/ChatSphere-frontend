@@ -15,39 +15,39 @@ export const API = axios.create({
    withCredentials: true
 })
 
- export const isUserOnline = (userId: string) => {
-   
-   if(!userId) return false
-   const {onlineUsers} = useSocket.getState()
+ export const isUserOnline = (userId?: string) => {
+  if (!userId) return false;
+  const { onlineUsers } = useSocket.getState();
+  return onlineUsers.includes(userId);
+};
 
-   return onlineUsers.includes(userId)
- }
+export const getOtherUserAndGroup = (
+  chat: ChatType,
+  currentUserId: string | null
+) => {
+  const isGroup = chat?.isGroup;
 
-export const getOtherUserAndGroup = (chat: ChatType, currentUserId: string | null) => {
-         
-     const isGroup = chat?.isGroup
+  if (isGroup) {
+    return {
+      name: chat.groupName || "Unnamed Group",
+      subheading: `${chat.participants.length} members`,
+      avatar: "",
+      isGroup,
+    };
+  }
 
-     if(isGroup) {
-      return {
-         name: chat.groupName || 'Unnamed Group',
-         subheading: `${chat.participants.length} members`,
-         avatar: " ",
-         isGroup
-      }
-     }
+  const other = chat?.participants.find((p) => p._id !== currentUserId);
+  const isOnline = isUserOnline(other?._id ?? "");
 
-     const other = chat?.participants?.find((p) => p._id !== currentUserId)
-
-      const isOnline = isUserOnline(other?._id ?? '')
-
-     return {
-      name: other?.name || 'Unknown',
-      subheading:  isOnline ? "Online" : "Offline",
-      avatar: other?.avatar || '',
-      isGroup: false,
-      isOnline
-     }
-}
+  return {
+    name: other?.name || "Unknown",
+    subheading: isOnline ? "Online" : "Offline",
+    avatar: other?.avatar || "",
+    isGroup: false,
+    isOnline,
+    // isAI: other?.isAI || false,
+  };
+};
 
 export const formatCustomDate = (isoDate: string): string => {
   const date = new Date(isoDate);

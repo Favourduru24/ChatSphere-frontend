@@ -9,16 +9,16 @@ const MiniSidebar = () => {
 
       <div className="flex flex-col justify-between mt-5 items-center m-1 flex-1 min-h-0">
         <div className="flex flex-col gap-4">
-          {navLink.map((nav) => (
-            <div className="bg-white p-2 rounded-full shadow-sm cursor-pointer">
+          {navLink.map((nav, index) => (
+            <div className="bg-white p-2 rounded-full shadow-sm cursor-pointer" key={index}>
               <nav.icon className="text-[#495568] size-6 font-bold" />
             </div>
           ))}
         </div>
 
         <div className="flex flex-col gap-4 items-center">
-          {navLink.map((nav) => (
-            <div className="bg-white p-2 rounded-full shadow-sm cursor-pointer">
+          {navLink.map((nav, index) => (
+            <div className="bg-white p-2 rounded-full shadow-sm cursor-pointer" key={index}>
               <nav.icon className="text-[#495568] size-6" />
             </div>
           ))}

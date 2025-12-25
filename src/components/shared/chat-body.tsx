@@ -6,7 +6,7 @@ import type { MessageType } from "@/types/chat.type";
 import { useEffect, useRef } from "react";
 
 interface Props {
-    chatId: string;
+    chatId: string | null;
     chatMessage: MessageType[]
     onReply: (message: MessageType) => void
 };
