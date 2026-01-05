@@ -1,9 +1,10 @@
-import { ArrowLeft, Loader2, Users2Icon } from 'lucide-react';
+import { ArrowLeft, Camera, Loader2, Users2Icon } from 'lucide-react';
 import Search from './search';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useChat } from '@/hooks/use-chat';
 import type { UserType } from '@/types/auth.type';
 import { userData } from '@/constants';
+import { toast } from 'sonner';
 
 interface PropsType {
   currentUserId: string;
@@ -34,10 +35,12 @@ const NewChat = ({
    setOpen
 }: PropsType) => {
 
-  // const [users, setUsers] = useState<UserType[]>([]);
   const [selectedUser, setSelectedUser] = useState<string[]>([]);
   const [groupName, setGroupName] = useState('');
   const [loadingUserId, setLoadingUserId] = useState<string | null>(null)
+  const [groupImage, setGroupImage] = useState<string | null>(null)
+
+  const groupImageRef = useRef<HTMLInputElement | null>(null)
 
   const { fetchAllUser, createChat, isCreatingChat, users} = useChat();
 
@@ -45,7 +48,21 @@ const NewChat = ({
      fetchAllUser()
   }, [fetchAllUser]);
 
-  // console.log('allUser wow', users)
+     
+
+     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+         const file = e.target.files?.[0]
+
+         if(!file) return
+         if(!file.type.startsWith('image/')) {
+             toast.error("Please select an image file")
+             return
+         }
+
+         const reader = new FileReader()
+         reader.onloadend = () => setGroupImage(reader.result as string)
+         reader.readAsDataURL(file)
+     }
 
   const toggleUserSelection = (id: string) => {
     setSelectedUser(prev =>
@@ -58,15 +75,21 @@ const NewChat = ({
   );
 
   const handleCreateGroup = async () => {
-           if (!groupName.trim() || selectedUser.length === 0) return;
+           if (!groupName.trim() && selectedUser.length === 0){
+             toast.error('Enter a group name')
+             return
+           }
+           
          await createChat({
          isGroup: true,
          participants: selectedUser,
-         groupName
+         groupName,
+         groupAvatar: groupImage ? groupImage : ''
          });
         }
 
     const handleCreateChat = async (userId: string) => {
+               
                setLoadingUserId(userId)
               try {
                await createChat({
@@ -79,8 +102,6 @@ const NewChat = ({
               }
        
     }
-
-  // console.log({selectedUser})
   return (
     <>
       {open && (
@@ -91,13 +112,20 @@ const NewChat = ({
             <div className="absolute inset-0 bg-white flex flex-col min-h-0 rounded-lg">
               <div className="px-3 py-3 border-b flex items-center gap-3">
                 <button onClick={() => setIsGroupOpen(false)} className="p-2 hover:bg-slate-100 rounded-md">
-                  <ArrowLeft className="size-5" />
+                  <ArrowLeft className="text-[#495568] size-5" />
                 </button>
                 <h3 className="text-lg font-semibold">Select members ({selectedUser?.length})</h3>
               </div>
 
-              <div className="px-4 pt-3">
-                <Search placeholder="Search username" value={searchQuery} setChange={setSearchQuery} />
+              <div className="px- pt-">
+               <div className="px-4 py-2 border-b">
+                <input
+                  className="w-full outline-none"
+                  placeholder="Search username"
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                />
+              </div>
               </div>
 
               <div className="flex-1 overflow-y-auto chat-scroll">
@@ -110,9 +138,11 @@ const NewChat = ({
                               <p className="text-sm font-semibold">No user found!</p>
                             </div>
                           ) : filteredUsers.map(user => (
-                  <label key={user.id} className="flex justify-between px-4 py-3 items-center hover:bg-gray-50 cursor-pointer">
+                  <label key={user._id} className="flex justify-between px-4 py-3 items-center hover:bg-gray-50 cursor-pointer">
                     <div className="flex gap-3 items-center">
-                      <div className="w-12 h-12 rounded-full bg-purple-200" />
+                      <div className="w-10 h-10 rounded-full min-w-10 min-h-10 overflow-hidden shrink-0 bg-gray-200">
+                <img src={user?.avatar ? user?.avatar : '/image/blank.png'} alt="profile-pic" className="w-full h-full object-cover rounded-full block"/>
+              </div>
                        <div className='flex flex-col gap-1'>
                       <p className='font-semibold text-sm'>{user.name}</p>
                       <p className='text-xs text-gray-500'>hey there! I'm using chatSphere.</p>
@@ -150,25 +180,36 @@ const NewChat = ({
             <div className="absolute inset-0 bg-white flex flex-col rounded-lg">
               <div className="px-4 py-3 border-b flex gap-3 items-center">
                 <button onClick={toggleCreateGroup}>
-                  <ArrowLeft className="size-5 " />
+                  <ArrowLeft className="text-[#495568] size-5" />
                 </button>
                 <h3 className="text-lg font-semibold">Group name</h3>
               </div>
 
-              <div className="flex-1 p-4">
+              <div className="flex-1 p-4 flex flex-col gap-4">
                 <input
                   className="w-full border p-2 rounded"
                   placeholder="Enter group name"
                   value={groupName}
                   onChange={e => setGroupName(e.target.value)}
                 />
+
+                <div className='flex items-center gap-3'>
+                 <div className='w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center' >
+                  {groupImage ? <img src={groupImage} className='shrink-0 w-full h-full rounded-full'/> : <Camera className='text-[#495568] size-5 cursor-pointer' onClick={() => groupImageRef.current?.click()}/>}
+                    <input type='file' className="hidden" ref={groupImageRef} accept="/image/*" onChange={handleImageChange}/>
+                 </div>
+
+                 <p className="text-[1rem]">Add group icon <span className="text-gray-400">(optional)</span></p>
+               </div>
               </div>
+
+               
 
               <div className="p-3 border-t">
                 <button className={`w-full py-2  text-white rounded-sm flex justify-center items-center  ${isCreatingChat ? 'bg-purple-500 cursor-not-allowed' : 'bg-purple-600 cursor-pointer'}`} onClick={handleCreateGroup} disabled={isCreatingChat}>
                   {isCreatingChat 
                   ? <div className='flex gap-2 items-center'>
-                      <Loader2 className='animate-spin size-5'/>
+                      <Loader2 className='animate-spin text-white size-5'/>
                       <p className='text-[1rem] text-white'>Loading...</p>
                   </div> : <p className='text-[1rem] text-white font-semibold'>Create Group</p>}
                 </button>
@@ -182,7 +223,7 @@ const NewChat = ({
               <div className="px-4 py-3 border-b flex justify-between items-center">
                 <h2 className="text-lg font-semibold">New Chat</h2>
                 <button onClick={() => setIsGroupOpen(true)} className='p-2 rounded-md hover:bg-slate-100'>
-                  <Users2Icon className="size-5" />
+                  <Users2Icon className="text-[#495568] size-5" />
                 </button>
               </div>
 
@@ -211,7 +252,9 @@ const NewChat = ({
                     className="flex px-4 py-3 items-center gap-3 cursor-pointer hover:bg-gray-50 justify-between"
                   >
                      <div className="flex gap-2 justify-between items-center">
-                        <div className="w-12 h-12 bg-purple-200 rounded-full" />
+                        <div className="w-10 h-10 rounded-full min-w-10 min-h-10 overflow-hidden shrink-0 bg-gray-200">
+                <img src={user?.avatar ? user?.avatar : '/image/blank.png'} alt="profile-pic" className="w-full h-full object-cover rounded-full block"/>
+              </div>
                      <div className='flex flex-col gap-1'>
                     <p className='text-sm font-semibold'>{user.name}</p>
                     <p className='text-xs text-gray-500'>hey there! I'm using chatSphere.</p>

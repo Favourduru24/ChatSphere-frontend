@@ -37,13 +37,13 @@ const getLastMessage = () =>  {
               <div className="w-full p-4">
                 <div className="flex justify-between items-start">
                   <div className="flex gap-4 items-center">
-                    <div className={`shrink-0 w-12 h-12 rounded-full ${`bg-amber-100`} flex items-center justify-center`}>
-
-                    </div>
+                     <div className="w-10 h-10 rounded-full min-w-10 min-h-10 overflow-hidden shrink-0 bg-gray-200">
+                <img src={avatar ? avatar : '/image/blank.png'} alt="profile-pic" className="w-full h-full object-cover rounded-full block"/>
+              </div>
 
                     <div className="flex flex-col gap-1">
                       <p className="text-sm font-semibold truncate">{name}</p>
-                      <p className="text-xs text-[#8B92A1]">{getLastMessage()}</p>
+                      <p className="text-xs text-[#8B92A1] truncate max-w-[200px]">{getLastMessage()}</p>
                     </div>
                   </div>
 

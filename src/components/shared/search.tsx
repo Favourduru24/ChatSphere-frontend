@@ -1,11 +1,22 @@
-import React from 'react'
 
-const Search = ({placeholder, value, setChange}) => {
+ interface Props {
+    placeholder: string,
+    value: string,
+    setChange: () => void
+ }
+
+const Search = ({placeholder, value, setChange}: Props) => {
 
      
   return (
-   <form className="border-b-2 border-[#8E8AD8] mb-3 rounded-sm">
-                        <input className="w-full h-9 outline-none px-2 bg-[#EDF2FE] rounded-sm" placeholder={placeholder} onChange={(e) => setChange(e.target.value)} value={value}/>
+   <form className="py-1 border-b">
+                        
+                         <input
+                  className="w-full outline-none"
+                  placeholder={placeholder}
+                  value={value}
+                  onChange={e => setChange(e.target.value)}
+                />
                       </form>
   )
 }

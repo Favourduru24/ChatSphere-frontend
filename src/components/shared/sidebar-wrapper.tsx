@@ -15,7 +15,6 @@ const SideBarWrapper = () => {
   const {socket} = useSocket()
 
   const currentUserId = user?._id ?? "";
-  const currentUserName = user?.name ?? "";
 
   const navigate = useNavigate();
 
@@ -78,13 +77,13 @@ const SideBarWrapper = () => {
         }
       }, [socket, updateChatLastMessage])
 
-      // console.log(chats, 'Chat-Data')
+
 
   return (
     <div className="max-w-[350px] w-full flex-col bg-[#F9FBFC] border-r border-t hidden lg:flex relative flex-1 min-h-0">
       <div className="px-4 py-3 border-b flex items-center justify-between">
         <div>
-          <p className="text-lg font-semibold">chatSphere {currentUserName}</p>
+          <p className="text-lg font-semibold">chatSphere</p>
           <p className="text-sm text-slate-400">Recent conversations</p>
         </div>
         <PenBox className="size-5 text-slate-600 cursor-pointer" onClick={toggleOpen} />
@@ -93,7 +92,7 @@ const SideBarWrapper = () => {
       <div className="p-4 h-14 flex items-center w-full">
         <div className="py-3 border-b flex items-center justify-between w-full">
           <div className="text-sm text-slate-500">
-            <span className="font-medium text-slate-700">{chaty?.length ?? 0}</span> people
+            <span className="font-medium text-slate-700">{chats?.length ?? 0}</span> {chats?.length > 1 ? 'chats': 'chat'}
           </div>
           <div className="text-sm text-slate-400">Sort: Recent</div>
         </div>

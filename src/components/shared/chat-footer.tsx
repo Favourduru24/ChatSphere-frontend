@@ -1,24 +1,26 @@
+import { useAuth } from '@/hooks/use-auth'
 import { useChat } from '@/hooks/use-chat'
 import type { MessageType } from '@/types/chat.type'
-import { Image, Link2, Mic, Send, X} from 'lucide-react'
+import { Image, Link2, Mic, Send, Smile, X} from 'lucide-react'
 import React, { useRef, useState } from 'react'
 import { toast } from 'sonner'
-import z from "zod"
 
 interface Props {
-    chatId: string
+    chatId: string | null
     currentUserId: string | null
+    isAIChat: boolean
     replyTo: MessageType | null
     onCancelReply: () => void
 }
-const ChatFooter = ({chatId, currentUserId, replyTo, onCancelReply}: Props) => {
+const ChatFooter = ({chatId, currentUserId, replyTo, onCancelReply, isAIChat}: Props) => {
 
     const [image, setImage] = useState<string | null>(null)
     const [content, setContent] = useState('')
-    const {sendMessage} = useChat()
+    const {sendMessage, isSendingMsg} = useChat()
      
 
      const imageInputRef = useRef<HTMLInputElement | null>(null)
+     
 
      const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
          const file = e.target.files?.[0]
@@ -42,17 +44,21 @@ const ChatFooter = ({chatId, currentUserId, replyTo, onCancelReply}: Props) => {
 
      const handleSubmitMessage = () => {
 
+          if(isSendingMsg) return
+
         if(!content?.trim() && !image) {
              toast.error('Enter a message or select an image')
              return
         }
 
-        sendMessage({
+        const payload = {
           chatId,
-          content,
-          image: image || undefined,
-          replyTo: replyTo
-        })
+           content: content,
+           image: image || undefined,
+           replyTo: replyTo
+        }
+
+        sendMessage(payload, isAIChat)
 
         onCancelReply()
         setContent(' ')
@@ -79,13 +85,13 @@ const ChatFooter = ({chatId, currentUserId, replyTo, onCancelReply}: Props) => {
             />
 
             <div className="flex gap-2 p-2">
-              <Mic className="text-[#495568] size-6 cursor-pointer" />
+              <Smile className="text-[#495568] size-6 cursor-pointer" />
                 <div>
 
               <Image className="text-[#495568] size-6 cursor-pointer" onClick={() => imageInputRef.current?.click()}/>
                 <input type="file" className="hidden" ref={imageInputRef} accept="/image/*" onChange={handleImageChange}/>
                 </div>
-              <Link2 className="text-[#495568] size-6 rotate-90 cursor-pointer" />
+              <Mic className="text-[#495568] size-6  cursor-pointer" />
             </div>
           </form>
 

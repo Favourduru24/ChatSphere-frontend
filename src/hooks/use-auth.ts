@@ -1,4 +1,4 @@
-import type { LoginType, RegisterType, UserType } from '@/types/auth.type'
+import type { LoginType, RegisterType, updateProfile, UserType } from '@/types/auth.type'
 import {create} from 'zustand'
 import {persist} from "zustand/middleware"
 import {toast} from "sonner"
@@ -9,12 +9,14 @@ interface AuthState {
     user: UserType | null
     isLoggingIn: boolean
     isSigningUp: boolean
+    profileLoading: boolean,
     isAuthStateLoading: boolean
 
     register: (data: RegisterType) => Promise<boolean>;
     login: (data: LoginType) => Promise<boolean>
     logout: () => void,
     isAuthStatus: () => void
+    updateProfile: (data: updateProfile) => Promise<boolean>;
 } 
 
 
@@ -24,6 +26,7 @@ interface AuthState {
          user: null,
          isSigningUp: false,
          isLoggingIn: false,
+         profileLoading: false,
          isAuthStateLoading: false,
          
                 register: async (data: RegisterType) => {
@@ -83,7 +86,34 @@ interface AuthState {
             } finally {
                 set({isAuthStateLoading: false})
             }  
-         }
+         },
+            updateProfile: async (data: updateProfile) => {
+                set({profileLoading: true})
+
+              try {
+                const response = await API.put("/user/update/profile", data);
+
+                set((state) => {
+                if (!state.user) return state;
+
+                return {
+                    user: {
+                    ...state.user,
+                    avatar: response.data.user.avatar,
+                    },
+                };
+                });
+                return true;
+            } catch (error: any) {
+                toast.error(
+                error.response?.data?.message || "Failed to update profile image"
+                );
+                console.error(error);
+                return false;
+            } finally {
+                set({profileLoading: false});
+            }
+            }
        }),
        {
          name: 'auth-storage'

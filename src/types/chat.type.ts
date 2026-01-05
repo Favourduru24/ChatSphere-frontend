@@ -9,16 +9,19 @@ export type MessageType = {
     chatId: string
     createdAt: string
     updatedAt: string
-    status?: string
+    status?: string,
+    streaming?: boolean,
 }
 
 export type ChatType = {
     _id: string
     lastMessage?: MessageType
     participants: UserType[]
-    isGroup: boolean
+    isGroup: boolean,
+    isAiChat: boolean,
     createdBy: string
     groupName?: string
+    groupAvatar?: string
     status?: string
     createdAt: string
     updatedAt: string
@@ -28,7 +31,8 @@ export type CreateChatType = {
     participantId?: string
     isGroup?: boolean
     participants?: string[]
-    groupName?: string
+    groupName?: string,
+    groupAvatar?: string
 }
 
 export type CreateMessageType = {

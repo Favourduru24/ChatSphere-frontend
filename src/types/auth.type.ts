@@ -10,11 +10,16 @@ export type LoginType = {
     password: string
 }
 
+export type updateProfile = {
+    avatar: string
+}
+
 export interface UserType {
     _id: string,
     name: string,
     email: string,
     avatar: string | null,
+    isAI: boolean,
     createdAt: string | Date,
     updatedAt: string | Date
 }

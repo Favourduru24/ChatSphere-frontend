@@ -32,7 +32,7 @@ export const getOtherUserAndGroup = (
     return {
       name: chat.groupName || "Unnamed Group",
       subheading: `${chat.participants.length} members`,
-      avatar: "",
+      avatar: chat?.groupAvatar,
       isGroup,
     };
   }
@@ -43,13 +43,19 @@ export const getOtherUserAndGroup = (
 
   console.log('Where online', otherName)
 
+  const subheading = other?.isAI ? 
+     "Assistant"
+     : isOnline 
+      ? 'Online'
+      : 'Offline'
+
   return {
     name: other?.name || "Unknown",
-    subheading: isOnline ? "Online" : "Offline",
+    subheading,
     avatar: other?.avatar || "",
     isGroup: false,
     isOnline,
-    // isAI: other?.isAI || false,
+    isAI: other?.isAI || false,
   };
 };
 

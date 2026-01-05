@@ -1,14 +1,12 @@
 import ChatBody from "@/components/shared/chat-body"
 import ChatFooter from "@/components/shared/chat-footer"
-import EmptyState from "@/components/shared/empty-state"
-import {chatMessage} from "@/constants"
 import { useAuth } from "@/hooks/use-auth"
 import { useChat } from "@/hooks/use-chat"
 import useChatId from "@/hooks/use-chat-id"
 import { useSocket } from "@/hooks/use-socket"
 import { getOtherUserAndGroup } from "@/lib/utils"
 import type { MessageType } from "@/types/chat.type"
-import {Plus, Search, Phone, Mic, Image, Link2, Send, Loader2} from "lucide-react"
+import {Plus, Search, Phone, Loader2} from "lucide-react"
 import { useEffect, useState } from "react"
 
 const SingleChat = () => {
@@ -23,6 +21,7 @@ const SingleChat = () => {
   const currentUser = user?._id || null
   const chat = singleChat?.chat
   const messages = singleChat?.messages || []
+  const isAIChat = chat?.isAiChat || false
 
   const {name, subheading, avatar, isOnline, isGroup} = getOtherUserAndGroup(chat, currentUser)
 
@@ -51,13 +50,13 @@ const SingleChat = () => {
     )
    }
 
-  //  if(!chat) {
-  //   return (
-  //     <div className="inset- h-full flex items-center justify-center">
-  //       <p className="text-lg text-gray-500">Chat not found!</p>
-  //     </div>
-  //   )
-  //  }
+   if(!chat) {
+    return (
+      <div className="inset- h-full flex items-center justify-center">
+        <p className="text-lg text-gray-500">Chat not found!</p>
+      </div>
+    )
+   }
 
   //  console.log('Chat-id', chatId)
   //  console.log('Chat-message', messages)
@@ -74,7 +73,9 @@ const SingleChat = () => {
       <div className="p-10 h-20 border flex items-center rounded-tr-md">
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-purple-400"></div>
+           <div className="w-10 h-10 rounded-full min-w-10 min-h-10 overflow-hidden shrink-0 bg-gray-200">
+                <img src={avatar ? avatar : '/image/blank.png'} alt="profile-pic" className="w-full h-full object-cover rounded-full block"/>
+              </div>
 
             <div className="hidden sm:flex flex-col">
               <p className="text-sm font-semibold mb-px">{name}</p>
@@ -109,6 +110,7 @@ const SingleChat = () => {
       <ChatFooter 
        replyTo={replyTo}
        chatId={chatId}
+       isAIChat={isAIChat}
        currentUserId={currentUser}
        onCancelReply={() => setReplyTo(null)}
       />
