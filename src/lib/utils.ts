@@ -23,7 +23,7 @@ export const API = axios.create({
 };
 
 export const getOtherUserAndGroup = (
-  chat: ChatType | undefined,
+  chat: ChatType,
   currentUserId: string | null
 ) => {
   const isGroup = chat?.isGroup;
@@ -32,33 +32,23 @@ export const getOtherUserAndGroup = (
     return {
       name: chat.groupName || "Unnamed Group",
       subheading: `${chat.participants.length} members`,
-      avatar: chat?.groupAvatar,
+      avatar: "",
       isGroup,
     };
   }
 
   const other = chat?.participants.find((p) => p._id !== currentUserId);
-  const otherName = chat?.participants.map((p) => p.name);
   const isOnline = isUserOnline(other?._id ?? "");
-
-  console.log('Where online', otherName)
-
-  const subheading = other?.isAI ? 
-     "Assistant"
-     : isOnline 
-      ? 'Online'
-      : 'Offline'
 
   return {
     name: other?.name || "Unknown",
-    subheading,
+    subheading: isOnline ? "Online" : "Offline",
     avatar: other?.avatar || "",
     isGroup: false,
     isOnline,
-    isAI: other?.isAI || false,
+    // isAI: other?.isAI || false,
   };
 };
-
 export const formatCustomDate = (isoDate: string): string => {
   const date = new Date(isoDate);
   const day = date.getUTCDate().toString().padStart(2, "0");

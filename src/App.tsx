@@ -23,7 +23,6 @@ function App() {
     }, [isAuthStatus, isAuth])
 
 
-    console.log({onlineUsers})
 
      if(isAuthStateLoading && !user && !isAuth){
          <div className='fixed inset-0 bg-black flex flex-col items-center justify-center z-10'>

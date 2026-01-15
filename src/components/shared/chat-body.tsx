@@ -4,7 +4,7 @@ import { useSocket } from "@/hooks/use-socket";
 import {formatCustomDate} from "@/lib/utils";
 import type { MessageType } from "@/types/chat.type";
 import { ReplyIcon } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Response } from "./ai-response";
 import {RiCircleFill} from "@remixicon/react"
 
@@ -37,70 +37,74 @@ const ChatBody = ({chatMessage, chatId, onReply}: Props) => {
     //      }
     //  }
 
-     useEffect(() => {
-      if(!socket) return
-
-      const handleNewMessage = (msg: MessageType) => addNewMessage(chatId, msg)
-
-      socket.on("message:new", handleNewMessage)
-
-      return () => {
-         socket.off("message:new", handleNewMessage)
-      }
-    }, [socket, addNewMessage, chatId])
-
     useEffect(() => {
-      if(!socket) return
-      if(!chatId) return
+  if (!socket) return
 
-        const handleAIStream = ({
-          chatId: streamChatId,
-          chunk,
-          done,
-          message,
-        }: any) => {
+  const handleNewMessage = (msg: MessageType) => {
+    if (msg.sender?.isAI) return
+    if (msg.sender?._id === userId) return
 
-           if(streamChatId !== chatId) return
-           
-           const lastMsg = chatMessage.at(-1)
+    addNewMessage(chatId, msg)
+  }
 
-           if(!lastMsg?._id && lastMsg?.streaming) return 
+  socket.on("message:new", handleNewMessage)
 
-           if(chunk?.trim() && !done) {
-             setAiChunk((prev) => {
-              const newContent = prev + chunk
+  return () => {
+    socket.off("message:new", handleNewMessage)
+  }
+}, [socket, addNewMessage, chatId, userId])
 
-              addOrUpdateMessage(
-                chatId,
-                {
-                  ...lastMsg,
-                  content: newContent
-                } as MessageType,
-                lastMsg?._id
-              )
 
-              return newContent
-             })
-             return
-           }
-              if(done) {
-                 console.log('AI fullmessage', message)
-                 setAiChunk(' ')
-              }
-      }
+    const handleAIStream = useCallback((data: any) => {
+      if(!chatId) return 
+  if (data.chatId !== chatId) return
 
-      socket.on("chat:ai", handleAIStream)
+  const lastMsg = chatMessage.at(-1)
+  if (!lastMsg) return
 
-      return () => {
-        socket.off("chat:ai", handleAIStream)
-      }
+  if (data.chunk && !data.done) {
+    addOrUpdateMessage(
+      chatId,
+      {
+        ...lastMsg,
+        content: (lastMsg.content || "") + data.chunk,
+        streaming: true,
+        sender: data.sender,
+      },
+      lastMsg._id
+    )
+    return
+  }
 
-    }, [socket, chatMessage, socket, chatId])
+  if (data.done && data.message) {
+    addOrUpdateMessage(
+      chatId,
+      {
+        ...data.message,
+        streaming: false,
+      },
+      lastMsg._id
+    )
+  }
+}, [chatId, addOrUpdateMessage])
+
+
+useEffect(() => {
+  if (!socket || !chatId) return
+
+  socket.on("chat:ai", handleAIStream)
+
+  return () => {
+    socket.off("chat:ai", handleAIStream)
+  }
+}, [socket, handleAIStream])
+
 
     useEffect(() => {
        bottomRef.current?.scrollIntoView({behavior: 'smooth'})
 
     }, [chatMessage])
+
 
     
     // const replySenderName = message.replyTo.sender._id === userId ? 'You' : message.replyTo.sender.name 
@@ -109,9 +113,9 @@ const ChatBody = ({chatMessage, chatId, onReply}: Props) => {
     <div className="px-10 max-sm:px-5 pt-5 flex-1 min-h-0 overflow-y-auto chat-scroll">
         <div className="flex flex-col gap-8">
           {chatMessage?.length > 0 ? chatMessage.map((chat, index) => (
-            <div className={`${chat.sender?._id === userId ? 'flex justify-end' : 'flex justify-start'}`}>
+            <div className={`${chat.sender?._id === userId ? 'flex justify-start' : 'flex justify-end'}`} key={chat._id}>
 
-            <div key={index} className="flex gap-3 ">
+            <div className="flex gap-3 ">
               <div className="w-10 h-10 rounded-full min-w-10 min-h-10 overflow-hidden shrink-0 bg-gray-200">
                 <img src={chat?.sender?.avatar ? chat?.sender?.avatar : '/image/blank.png'} alt="profile-pic" className="w-full h-full object-cover rounded-full block"/>
               </div>
@@ -124,9 +128,9 @@ const ChatBody = ({chatMessage, chatId, onReply}: Props) => {
 }</span>
                 </p>
 
-                <div className={`p-2 max-w-md group relative ${chat?.sender?._id === userId ? 'rounded-tr-xl rounded-l-xl bg-[#F9FBFC]' : 'rounded-bl-xl rounded-r-xl bg-[#F5F5F5]'}`}>
+                <div className={`p-2 max-w-md group relative ${chat?.sender?._id === userId ? 'rounded-tr-xl rounded-l-xl bg-[#F4E5FF]' : 'rounded-bl-xl rounded-r-xl bg-[#F5F5F5] '}`}>
                   
-                  <p className="text-[#8B92A1] text-sm leading-6"><Response>{chat?.content}</Response></p>
+                  <div className={`${chat?.sender?._id === userId ? 'text-[#4A0072]' : 'text-[#333333]'}  text-sm leading-6`}><Response>{chat?.content}</Response></div>
 
                   {chat?.streaming &&  (
                     <span >
@@ -140,10 +144,10 @@ const ChatBody = ({chatMessage, chatId, onReply}: Props) => {
                 </div>
 
                 {chat.image && (
-                  <div className="w-80 h-50 rounded-md min-w-10 min-h-10 overflow-hidden shrink-0 bg-gray-200">
+                  <div className="w-80 h-50 rounded-md min-w-10 min-h-10 overflow-hidden shrink-0 bg-gray-200 mt-1">
                   <img
                   src={chat.image}
-                  className="border-[3px] border-gray-200 rounded-md object-center"
+                  className="border-[3px] border-gray-200 rounded-md object-cover h-full w-full"
                   />
                   </div>
                 )}

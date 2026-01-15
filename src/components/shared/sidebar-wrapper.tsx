@@ -48,7 +48,6 @@ const SideBarWrapper = () => {
       useEffect(() => {
         if(!socket) return
         const handleNewChat = (newChat: ChatType) => {
-           console.log('Recieved new chat', newChat)
             addNewChat(newChat)
         }
 
@@ -65,7 +64,6 @@ const SideBarWrapper = () => {
 
        const handleChatUpdate = (data: {chatId: string, lastMessage: MessageType}) => {
   
-          console.log('Recieved update on chat', data.lastMessage)   
 
            updateChatLastMessage(data.chatId, data.lastMessage)
         }

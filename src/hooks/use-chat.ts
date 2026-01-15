@@ -238,7 +238,7 @@ interface ChatState {
     addOrUpdateMessage: (chatId: string, msg: MessageType, tempId?: string) => {
        const singleChat = get().singleChat
 
-       if(!singleChat || singleChat.chat._id === chatId) return
+       if (!singleChat || singleChat.chat._id !== chatId) return
 
       const messages = singleChat.messages
 

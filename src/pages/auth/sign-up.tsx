@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
 import { z } from "zod"
 import { useAuth } from "@/hooks/use-auth"
-import { useEffect, useState } from "react"
+import {useState } from "react"
 import { toast } from "sonner"
 import type { RegisterType } from "@/types/auth.type"
-import { Loader2 } from "lucide-react"
+import { Loader2, Lock, Mail, User } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 
 const SignUp = () => {
@@ -43,21 +43,31 @@ const SignUp = () => {
     toast.success("Account created!");
   }
     };
+
+   const handleGoogleLogin = () => {
+      window.location.href = "http://localhost:8000/oauth/api/google";
+    };
+
   return (
     <section className="w-full flex lg:flex-row items-center justify-center h-screen gap-5 px-5 ">
       {/* Form Container */}
-      <div className="w-full max-w-lg flex flex-col gap-6 py-6 bg-white border border-[#ebeeed] rounded-xl shadow-sm p-2 justify-center">
+      <div className="w-full max-w-lg flex flex-col py-6 bg-white border border-[#ebeeed] rounded-xl shadow-sm p-2 justify-center">
         {/* Logo & Title */}
-        <div className="w-full flex flex-col gap-3">
+        <div className="w-full flex flex-col gap-3 px-6 justify-center">
           <div className="flex gap-2 justify-center items-center">
             <div className="w-8 h-8 rounded-md bg-purple-400 flex items-center justify-center">
               <p className="font-semibold text-white">C</p>
             </div>
             <p className="text-xl font-semibold">chatSphere</p>
           </div>
-          <p className="text-2xl font-semibold text-center font-sans text-gray-400 underline">
-            Create your account
-          </p>
+
+            <div className="px-3 py-3 border-[1.5px] cursor-pointer rounded-full max-w-80 w-ful mx-auto w-full flex justify-center items-center mt-2 gap-2" onClick={handleGoogleLogin}>
+               <img src="/image/google2.png" className="size-5 object-cover"/>
+              <label className="text-sm font-normal text-gray-400 cursor-pointer">Login with Google</label>
+            </div>
+
+             <p className="text-sm font-norma text-gray-400 text-center mt-2 font-semibold">OR</p>
+             <div className="h-0 w-full"/>
         </div>
 
         {/* Form */}
@@ -71,44 +81,55 @@ const SignUp = () => {
           {/* Username */}
           <div className="w-full flex flex-col gap-2.5 px-6 relative">
             <label className="text-sm font-normal text-gray-400">Username</label>
+            <div className="focus:ring-2 focus:ring-purple-600 rounded-md flex items-center border pl-1">
+              <User className="size-5 text-gray-600 "/>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
               type="name"
               id="name"
               placeholder="Username"
-              className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-400 font-sans font-normal outline-purple-600"
-            />
+              className="py-2 px-1 placeholder:text-gray-400 font-sans font-normal w-full outline-none placeholder:text-sm"
+              />
+
+
+              </div>
           </div>
 
           {/* Email */}
           <div className="w-full flex flex-col gap-2.5 px-6 relative">
             <label className="text-sm font-normal text-gray-400">Email</label>
+            <div className="focus:ring-2 focus:ring-purple-600 rounded-md flex items-center border pl-1">
+              <Mail className="size-5 text-gray-600 "/>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               type="email"
               id="email"
               placeholder="email@gmail.com"
-              className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-400 font-sans font-normal outline-purple-600"
+              className="py-2 px-1 placeholder:text-gray-400 font-sans font-normal w-full outline-none placeholder:text-sm"
             />
+          </div>
           </div>
 
           {/* Password */}
           <div className="w-full flex flex-col gap-2.5 px-6 relative">
             <label className="text-sm font-normal text-gray-400">Password</label>
+            <div className="focus:ring-2 focus:ring-purple-600 rounded-md flex items-center border pl-1">
+              <Lock className="size-5 text-gray-600 "/>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               id="password"
               placeholder="pa**word"
-              className="p-3 ring-2 ring-[#f9fbfc] rounded-md placeholder:text-gray-400 font-sans font-normal outline-purple-600"
+              className="py-2 px-1 placeholder:text-gray-400 font-sans font-normal w-full outline-none placeholder:text-sm"
             />
+          </div>
           </div>
 
           {/* Submit Button */}
-          <div className="w-full flex flex-col gap-2.5 px-6 relative mt-4">
+          <div className="w-full flex flex-col gap-2.5 px-6 relative mt-3">
             <button
               type="submit"
               disabled={isSigningUp}
@@ -131,7 +152,7 @@ const SignUp = () => {
         </form>
 
         {/* Sign Up Link */}
-        <p className="text-sm font-medium text-end mx-6">
+        <p className="text-sm font-medium text-end mx-6 mt-1">
           Already have an account?{" "}
           <Link to="/">
             <span className="text-purple-600 cursor-pointer">Sign In</span>

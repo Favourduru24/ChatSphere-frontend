@@ -58,11 +58,7 @@ const SingleChat = () => {
     )
    }
 
-  //  console.log('Chat-id', chatId)
-  //  console.log('Chat-message', messages)
-  //  console.log('Chat', chat)
-   console.log('isOnline', isOnline)
-   console.log('singleChat', chat)
+  
     
   return (
     <div className="flex flex-col h-full min-h-0">
