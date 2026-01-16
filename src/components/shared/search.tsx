@@ -2,7 +2,7 @@
  interface Props {
     placeholder: string,
     value: string,
-    setChange: () => void
+    setChange: (value: string) => void
  }
 
 const Search = ({placeholder, value, setChange}: Props) => {

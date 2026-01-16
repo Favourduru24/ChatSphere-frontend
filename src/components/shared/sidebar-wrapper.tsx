@@ -5,7 +5,6 @@ import ChatList from './chat-list';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/use-auth';
 import NewChat from './newchat-popover';
-import { chaty } from '@/constants';
 import { useSocket } from '@/hooks/use-socket';
 import type { ChatType, MessageType } from '@/types/chat.type';
 
@@ -119,7 +118,7 @@ const SideBarWrapper = () => {
             </div>
           ) : chats?.length === 0 ? (
             <div className="flex items-center justify-center w-full h-full">
-              <p className="text-sm font-semibold">No chats found!</p>
+              <p className="text-sm font-semibold">No chats found create one!</p>
             </div>
           ) : (
             chats?.map(chat => (

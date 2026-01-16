@@ -11,7 +11,6 @@ function App() {
 
     const {user, isAuthStatus, isAuthStateLoading} = useAuth()
     const {pathname} = useLocation()
-    const {onlineUsers} = useSocket()
 
     const isAuth = isAuthRoutes(pathname)
 

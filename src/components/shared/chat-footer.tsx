@@ -85,18 +85,18 @@ const ChatFooter = ({chatId, currentUserId, replyTo, onCancelReply, isAIChat}: P
             />
 
             <div className="flex gap-2 p-2">
-              <Smile className="text-[#495568] size-6 cursor-pointer" />
+              {/* <Smile className="text-[#495568] size-6 cursor-pointer" /> */}
                 <div>
 
-              <Image className="text-[#495568] size-6 cursor-pointer" onClick={() => imageInputRef.current?.click()}/>
+              <Image className="text-[#495568] sm:size-6 size-5 cursor-pointer" onClick={() => imageInputRef.current?.click()}/>
                 <input type="file" className="hidden" ref={imageInputRef} accept="/image/*" onChange={handleImageChange}/>
                 </div>
-              <Mic className="text-[#495568] size-6  cursor-pointer" />
+              {/* <Mic className="text-[#495568] size-6  cursor-pointer" /> */}
             </div>
           </form>
 
-          <button className="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center text-white shadow" onClick={handleSubmitMessage}>
-            <Send className="size-5 cursor-pointer"/>
+          <button className="sm:h-12 sm:w-12 w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white shadow" onClick={handleSubmitMessage}>
+            <Send className="sm:size-5 size-4 cursor-pointer"/>
                </button>
         </div>
       </div>

@@ -1,9 +1,6 @@
 import { ArrowLeft, Camera, Loader2, Users2Icon } from 'lucide-react';
-import Search from './search';
 import { useEffect, useRef, useState } from 'react';
 import { useChat } from '@/hooks/use-chat';
-import type { UserType } from '@/types/auth.type';
-import { userData } from '@/constants';
 import { toast } from 'sonner';
 
 interface PropsType {
@@ -12,7 +9,7 @@ interface PropsType {
   searchQuery: string;
   setSearchQuery: (v: string) => void;
   isUsersLoading: boolean;
-  chatModalRef: React.RefObject<HTMLDivElement>;
+  chatModalRef: React.RefObject<HTMLDivElement | null>;
   isGroupOpen: boolean;
   createGroupModal: boolean;
   toggleCreateGroup: () => void;
@@ -159,7 +156,17 @@ const NewChat = ({
               </div>
 
               <div className="p-3 border-t flex gap-2">
-                <button className={`w-full py-2 text-white rounded-md ${!selectedUser?.length ? 'bg-purple-400 cursor-not-allowed' : 'bg-purple-600'}`} onClick={selectedUser.length && toggleCreateGroup}>
+                              <button
+                  className={`w-full py-2 text-white rounded-md ${
+                    !selectedUser?.length
+                      ? 'bg-purple-400 cursor-not-allowed'
+                      : 'bg-purple-600'
+                  }`}
+                  onClick={() => {
+                    if (!selectedUser.length) return
+                    toggleCreateGroup()
+                  }}
+                >
                   Next
                 </button>
                 

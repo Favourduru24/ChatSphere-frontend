@@ -67,7 +67,7 @@ const ChatSetting = ({settingOpenModal, setSettingOpenModal}: Props) => {
     <>
     {
             settingOpenModal ? (
-              <div className='bg-[#F9FBFC] max-w-[300px] w-full h-[32.9rem] shadow-sm rounded-r-md absolute bottom-2 border py-8 px-5 flex flex-col justify-between' ref={settingModalRef}>
+              <div className='bg-[#F9FBFC] max-w-[300px] w-full h-[32.9rem] shadow-sm rounded-r-md absolute bottom-2 border py-8 px-5 flex flex-col justify-between z-20' ref={settingModalRef}>
 
                 <div className='h-full flex flex-col gap-5'>
                    

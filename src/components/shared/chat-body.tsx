@@ -23,19 +23,22 @@ const ChatBody = ({chatMessage, chatId, onReply}: Props) => {
     const bottomRef = useRef<HTMLDivElement | null>(null)
     const [_, setAiChunk] = useState<string>('')
     
-      //  const message
-    //  const message = {
-    //      sender: {
-    //         _id: '6938f28cc486d7352f0fd7d9',
-    //         name: 'Duru Pristine'
-    //      },
-    //      replyTo: {
-    //          sender: {
-    //         _id: '1',
-    //         name: 'Duru Pristine'
-    //      },
-    //      }
-    //  }
+    const [open, setOpen] = useState(false)
+    const [activeNav, setActiveNav] = useState<string | null>(null)
+    const panelRef = useRef<HTMLDivElement>(null)
+  
+    // close on outside click
+    useEffect(() => {
+      const handler = (e: MouseEvent) => {
+        if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
+          setOpen(false)
+          setActiveNav(null)
+        }
+      }
+  
+      if (open) document.addEventListener('mousedown', handler)
+      return () => document.removeEventListener('mousedown', handler)
+    }, [open])
 
     useEffect(() => {
   if (!socket) return
@@ -110,7 +113,7 @@ useEffect(() => {
     // const replySenderName = message.replyTo.sender._id === userId ? 'You' : message.replyTo.sender.name 
 
   return (
-    <div className="px-10 max-sm:px-5 pt-5 flex-1 min-h-0 overflow-y-auto chat-scroll">
+    <div className="px-10 max-sm:px-5 pt-5 flex-1 min-h-0 overflow-y-auto chat-scroll overflow-x-hidden">
         <div className="flex flex-col gap-8">
           {chatMessage?.length > 0 ? chatMessage.map((chat, index) => (
             <div className={`${chat.sender?._id === userId ? 'flex justify-start' : 'flex justify-end'}`} key={chat._id}>
@@ -168,6 +171,8 @@ useEffect(() => {
           )) : ''}
         </div>
         <div ref={bottomRef}/>
+
+        
       </div>
   )
 }

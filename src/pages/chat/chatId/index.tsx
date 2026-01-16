@@ -1,18 +1,21 @@
 import ChatBody from "@/components/shared/chat-body"
 import ChatFooter from "@/components/shared/chat-footer"
+import ChatList from "@/components/shared/chat-list"
 import { useAuth } from "@/hooks/use-auth"
 import { useChat } from "@/hooks/use-chat"
 import useChatId from "@/hooks/use-chat-id"
 import { useSocket } from "@/hooks/use-socket"
 import { getOtherUserAndGroup } from "@/lib/utils"
 import type { MessageType } from "@/types/chat.type"
-import {Plus, Search, Phone, Loader2} from "lucide-react"
-import { useEffect, useState } from "react"
+import {Search, Phone, Loader2, Menu, X} from "lucide-react"
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from "react"
 
 const SingleChat = () => {
    
   const chatId = useChatId()
-  const {fetchSingleChat, isSingleChatLoading, singleChat} = useChat()
+  const {fetchSingleChat, isSingleChatLoading, singleChat, chats, isChatLoading,} = useChat()
+  const navigate = useNavigate();
   const {socket} = useSocket()
   const {user} = useAuth()
 
@@ -25,6 +28,24 @@ const SingleChat = () => {
 
   const {name, subheading, avatar, isOnline, isGroup} = getOtherUserAndGroup(chat, currentUser)
 
+
+   const [open, setOpen] = useState(false)
+     const [activeNav, setActiveNav] = useState<string | null>(null)
+     const panelRef = useRef<HTMLDivElement>(null)
+     const onRoute = (id: string) => navigate(`/chat/${id}`);
+   
+     // close on outside click
+     useEffect(() => {
+       const handler = (e: MouseEvent) => {
+         if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
+           setOpen(false)
+           setActiveNav(null)
+         }
+       }
+   
+       if (open) document.addEventListener('mousedown', handler)
+       return () => document.removeEventListener('mousedown', handler)
+     }, [open])
 
   useEffect(() => {
      if(!chatId) return
@@ -66,7 +87,7 @@ const SingleChat = () => {
     {/* RIGHT CHAT VIEW */}
     <div className="w-full border-t border-b border-r flex flex-col rounded-r-md flex-1 min-h-0">
       {/* Chat Header */}
-      <div className="p-10 h-20 border flex items-center rounded-tr-md">
+      <div className="sm:p-10 p-5 h-20 border flex items-center rounded-tr-md">
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-3">
            <div className="w-10 h-10 rounded-full min-w-10 min-h-10 overflow-hidden shrink-0 bg-gray-200">
@@ -92,8 +113,9 @@ const SingleChat = () => {
             </div>
             <Search className="text-[#495568] size-6 cursor-pointer" />
             <Phone className="text-[#495568] size-6 cursor-pointer" />
-            <div className="bg-purple-600 p-2 rounded-full">
-              <Plus className="size-6 text-white cursor-pointer" />
+            <div className="p-2 rounded-full sm:hidden block" onClick={() =>
+                {setOpen(true)}}>
+              <Menu className="size-6 text-[#495568] cursor-pointer" />
             </div>
           </div>
         </div>
@@ -112,6 +134,52 @@ const SingleChat = () => {
       />
     </div>
   </div>
+
+  <div
+        ref={panelRef}
+        className={`
+          absolute top-0 left-0 ml- h-full max-w-[350px] w-full
+          bg-white border rounded-md shadow-lg z-50
+          transform transition-all duration-300 ease-out
+          ${open ? 'translate-x-0 opacity-100' : 'translate-x-6 opacity-0 pointer-events-none'}
+        `}
+      >
+         <div className="flex flex-col">
+
+        <div className="flex items-center justify-between p-3 border-b">
+          <p className="font-medium text-sm">ChatSphere</p>
+          <X
+            className="size-4 cursor-pointer"
+            onClick={() => {
+              setOpen(false)
+              setActiveNav(null)
+            }}
+            />
+            </div>
+
+            
+        </div>
+
+        <div className="p-3 text-sm text-slate-600">
+        <div className="flex-1 min-h-0 overflow-y-auto chat-scroll h-full">
+        <div className="flex flex-col h-full">
+          {isChatLoading ? (
+            <div className="flex items-center justify-center w-full h-full">
+              <Loader2 className="size-10 animate-spin text-gray-400" />
+            </div>
+          ) : chats?.length === 0 ? (
+            <div className="flex items-center justify-center w-full h-full">
+              <p className="text-sm font-semibold">No chats found create one!</p>
+            </div>
+          ) : (
+            chats?.map(chat => (
+              <ChatList key={chat._id} chat={chat} onClick={() => onRoute(chat._id)} currentUserId={currentUser} />
+            ))
+          )}
+        </div>
+      </div>
+        </div>
+      </div>
 </div>
   )
 }
