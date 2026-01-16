@@ -27,7 +27,7 @@ const SignIn = () => {
       toast.error(errorMessages)
       return
     }
-
+     
     const data: LoginType = result.data
     const success = await login(data)
 
@@ -37,6 +37,10 @@ const SignIn = () => {
   }
 
   }
+
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:8000/api/auth/google";
+  };
 
   return (
     <section className="w-full flex lg:flex-row items-center justify-center h-screen gap-5 px-5 ">
@@ -52,7 +56,7 @@ const SignIn = () => {
             <p className="text-xl font-semibold">chatSphere</p>
           </div>
 
-            <div className="px-3 py-3 border-[1.5px] cursor-pointer rounded-full max-w-80 w-ful mx-auto w-full flex justify-center items-center mt-2 gap-2">
+            <div className="px-3 py-3 border-[1.5px] cursor-pointer rounded-full max-w-80 w-ful mx-auto w-full flex justify-center items-center mt-2 gap-2" onClick={handleGoogleLogin}>
                 <img src="/image/google2.png" className="size-5 object-cover"/>
               <label className="text-[1rem] font-normal text-gray-400 cursor-pointer">Login with Google</label>
             </div>

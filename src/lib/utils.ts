@@ -31,7 +31,7 @@ export const getOtherUserAndGroup = (
   if (isGroup) {
     return {
       name: chat.groupName || "Unnamed Group",
-      subheading: `${chat.participants.length} members`,
+      subheading: `${chat.participants?.length} members`,
       avatar: "",
       isGroup,
     };

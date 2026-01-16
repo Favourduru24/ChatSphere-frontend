@@ -45,7 +45,7 @@ const SignUp = () => {
     };
 
    const handleGoogleLogin = () => {
-      window.location.href = "http://localhost:8000/oauth/api/google";
+      window.location.href = "http://localhost:8000/api/auth/google";
     };
 
   return (

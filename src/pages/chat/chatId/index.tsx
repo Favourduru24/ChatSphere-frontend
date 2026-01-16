@@ -73,17 +73,17 @@ const SingleChat = () => {
                 <img src={avatar ? avatar : '/image/blank.png'} alt="profile-pic" className="w-full h-full object-cover rounded-full block"/>
               </div>
 
-            <div className="hidden sm:flex flex-col">
+            <div className="flex flex-col">
               <p className="text-sm font-semibold mb-px">{name}</p>
-              <p className="text-xs text-[#8B92A1]">
-               {subheading || '187 People - 187 Chats Total'} 
+              <p className="text-xs text-green-400">
+               {subheading} 
               </p>
-              <p className="text-xs text-green-400 animate-pulse">Typing...</p>
+              {/* <p className="text-xs text-green-400 animate-pulse">Typing...</p> */}
             </div>
 
-            <p className="text-xs text-[#8B92A1] sm:hidden">
+            {/* <p className="text-xs text-[#8B92A1] sm:hidden">
               187 People
-            </p>
+            </p> */}
           </div>
 
           <div className="flex items-center gap-3">
