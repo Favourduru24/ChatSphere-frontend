@@ -45,7 +45,7 @@ const SignUp = () => {
     };
 
    const handleGoogleLogin = () => {
-      window.location.href = "http://localhost:8000/api/auth/google";
+      window.location.href = "chatsphere-production-7bdc.up.railway.app/api/auth/google";
     };
 
   return (

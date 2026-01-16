@@ -4,7 +4,6 @@ import { useAuth } from './hooks/use-auth'
 import AppRoutes from './routes'
 import { useEffect } from 'react'
 import { isAuthRoutes } from './routes/routes'
-import { useSocket } from './hooks/use-socket'
 import { Loader } from 'lucide-react'
 
 function App() {

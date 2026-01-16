@@ -1,7 +1,7 @@
 import { useAuth } from '@/hooks/use-auth'
 import { useChat } from '@/hooks/use-chat'
 import type { MessageType } from '@/types/chat.type'
-import { Image, Link2, Mic, Send, Smile, X} from 'lucide-react'
+import { Image, Link2, Mic, Send, X} from 'lucide-react'
 import React, { useRef, useState } from 'react'
 import { toast } from 'sonner'
 

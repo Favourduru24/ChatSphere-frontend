@@ -109,7 +109,7 @@ const NewChat = ({
             <div className="absolute inset-0 bg-white flex flex-col min-h-0 rounded-lg">
               <div className="px-3 py-3 border-b flex items-center gap-3">
                 <button onClick={() => setIsGroupOpen(false)} className="p-2 hover:bg-slate-100 rounded-md">
-                  <ArrowLeft className="text-[#495568] size-5" />
+                  <ArrowLeft className="text-[#495568] size-5 cursor-pointer" />
                 </button>
                 <h3 className="text-lg font-semibold">Select members ({selectedUser?.length})</h3>
               </div>
@@ -157,7 +157,7 @@ const NewChat = ({
 
               <div className="p-3 border-t flex gap-2">
                               <button
-                  className={`w-full py-2 text-white rounded-md ${
+                  className={`w-full py-2 text-white cursor-pointer rounded-md ${
                     !selectedUser?.length
                       ? 'bg-purple-400 cursor-not-allowed'
                       : 'bg-purple-600'
@@ -170,7 +170,7 @@ const NewChat = ({
                   Next
                 </button>
                 
-                <button className="w-full py-2 bg-gray-200 rounded-md" onClick={() => 
+                <button className="w-full py-2 bg-gray-200 rounded-md cursor-pointer" onClick={() => 
                   {
                     setIsGroupOpen(false),
                     setGroupName('')
@@ -187,7 +187,7 @@ const NewChat = ({
             <div className="absolute inset-0 bg-white flex flex-col rounded-lg">
               <div className="px-4 py-3 border-b flex gap-3 items-center">
                 <button onClick={toggleCreateGroup}>
-                  <ArrowLeft className="text-[#495568] size-5" />
+                  <ArrowLeft className="text-[#495568] size-5 cursor-pointer" />
                 </button>
                 <h3 className="text-lg font-semibold">Group name</h3>
               </div>
@@ -213,7 +213,7 @@ const NewChat = ({
                
 
               <div className="p-3 border-t">
-                <button className={`w-full py-2  text-white rounded-sm flex justify-center items-center  ${isCreatingChat ? 'bg-purple-500 cursor-not-allowed' : 'bg-purple-600 cursor-pointer'}`} onClick={handleCreateGroup} disabled={isCreatingChat}>
+                <button className={`w-full py-2  text-white rounded-sm flex justify-center items-center cursor-pointer  ${isCreatingChat ? 'bg-purple-500 cursor-not-allowed' : 'bg-purple-600 cursor-pointer'}`} onClick={handleCreateGroup} disabled={isCreatingChat}>
                   {isCreatingChat 
                   ? <div className='flex gap-2 items-center'>
                       <Loader2 className='animate-spin text-white size-5'/>
@@ -229,8 +229,8 @@ const NewChat = ({
             <>
               <div className="px-4 py-3 border-b flex justify-between items-center">
                 <h2 className="text-lg font-semibold">New Chat</h2>
-                <button onClick={() => setIsGroupOpen(true)} className='p-2 rounded-md hover:bg-slate-100'>
-                  <Users2Icon className="text-[#495568] size-5" />
+                <button onClick={() => setIsGroupOpen(true)} className='p-2 cursor-pointer rounded-md hover:bg-slate-100'>
+                  <Users2Icon className="text-[#495568] size-5 cursor-pointer" />
                 </button>
               </div>
 
