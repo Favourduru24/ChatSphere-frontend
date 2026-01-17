@@ -39,7 +39,7 @@ const SignIn = () => {
   }
 
   const handleGoogleLogin = () => {
-    window.location.href = "chatsphere-production-7bdc.up.railway.app/api/auth/google";
+    window.location.href = "https://chatsphere-production-7bdc.up.railway.app/api/auth/google";
   };
 
   return (
