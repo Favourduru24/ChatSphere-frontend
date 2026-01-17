@@ -1,0 +1,9 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/(.*)",
+        "destination": "https://chatsphere-production-7bdc.up.railway.app/api/$1"
+      }
+    ]
+  }
+  

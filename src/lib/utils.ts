@@ -9,12 +9,17 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+// export const API = axios.create({
+//    baseURL: import.meta.env.MODE === 'development' 
+//    ? `${import.meta.env.VITE_API_URL}/api`
+//    : '/api',
+//    withCredentials: true
+// })
 export const API = axios.create({
-   baseURL: import.meta.env.MODE === 'development' 
-   ? `${import.meta.env.VITE_API_URL}/api`
-   : '/api',
-   withCredentials: true
+  baseURL: `${import.meta.env.VITE_API_URL}/api`,
+  withCredentials: true
 })
+
 
  export const isUserOnline = (userId?: string) => {
   if (!userId) return false;
